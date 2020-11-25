@@ -3,7 +3,7 @@
 	<name>Db2WEB</name>
 	<comment></comment>
 	<projects>
-		<project>DB2TestEJB</project>
+		<project>Db2EJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
