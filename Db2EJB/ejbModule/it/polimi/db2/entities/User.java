@@ -9,7 +9,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user", schema = "db_project")
-@NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2")
+@NamedQueries({ @NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2"),
+	@NamedQuery(name = "User.findByUsername", query = "SELECT r FROM User r WHERE r.username = ?1"),
+	@NamedQuery(name = "User.findByEmail", query = "SELECT r FROM User r WHERE r.email = ?1")})
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +29,14 @@ public class User implements Serializable {
 	
 	private int role;
 
-	public User() {
+	public User(){}
+	
+	
+	
+	public User(String user, String psw, String email) {
+		this.username = user;
+		this.password = psw;
+		this.email = email;
 	}
 
 	public int getId() {
