@@ -1,0 +1,83 @@
+package it.polimi.db2.entities;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+/**
+ * The persistent class for the user database table.
+ * 
+ */
+@Entity
+@Table(name = "user", schema = "db_project")
+@NamedQuery(name = "User.checkCredentials", query = "SELECT r FROM User r  WHERE r.username = ?1 and r.password = ?2")
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	private String password;
+
+	private String username;
+	
+	private String email;
+	
+	private int banned;
+	
+	private int role;
+
+	public User() {
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getRole() {
+		return this.role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+	
+	public int getBanned() {
+		return this.banned;
+	}
+
+	public void setBanned(int banned) {
+		this.banned = banned;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+}

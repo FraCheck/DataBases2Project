@@ -3,9 +3,7 @@
 	<persistence-unit name="Db2EJB" 
 		transaction-type="JTA">
 		<jta-data-source>DB2ProjectResource</jta-data-source>
-		<!-- here we need to write what classes need to be entities like this:
-		<class>it.polimi.db2project.x.entities.ClassName</class>
-		-->
+			<class>it.polimi.db2.entities.User</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>
