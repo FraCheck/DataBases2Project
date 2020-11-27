@@ -51,11 +51,7 @@ public class LoggedIn implements Filter {
 		if (session.isNew() || session.getAttribute("user") == null) {	// If User is not logged yet...
 				res.sendRedirect(loginpath);	// redirect to the login page
 				return;
-		}else if(session.getAttribute("user") != null)	// If User is already logged in...
-		{	
-				res.sendRedirect(homepath);	// redirect him to the homepage
-				return;			
-		}		
+		}
 		// pass the request along the filter chain
 		chain.doFilter(request, response);	
 	}
