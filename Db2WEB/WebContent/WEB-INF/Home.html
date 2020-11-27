@@ -8,14 +8,10 @@
 </head>
 <body>
 	<div align="right">
-		<a th:href="@{/UpdateProfile}">Profile</a>
-	</div>
-	<div align="right">
 		<a th:href="@{/Logout}">Logout</a>
 	</div>
 	<h1>Welcome to the Marketing Questionnaire Home Page</h1>
 	<p
 		th:text="${'Nice to see you again ' + session.user.username}"></p>
-
 </body>
 </html>

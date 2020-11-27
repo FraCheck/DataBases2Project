@@ -17,10 +17,10 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.polimi.db2.entities.User;
-import it.polimi.db2.exceptions.CredentialsException;
 import it.polimi.db2.exceptions.UserExistsAlreadyException;
 import it.polimi.db2.services.UserService;
 import it.polimi.db2.utils.*;
+
 @WebServlet("/SignIn")
 public class SignIn extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -32,6 +32,7 @@ public class SignIn extends HttpServlet{
 	public SignIn() {
 		super();
 	}
+	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -43,9 +44,8 @@ public class SignIn extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String err_msg = "";
-		boolean form_error = false;
-			
+		String err_msg = ""; 
+		boolean form_error = false; // Check variable for errors in form data
 		// Get and escape parameters
 		String username = null;
 		String password = null;
@@ -72,7 +72,7 @@ public class SignIn extends HttpServlet{
 				err_msg = "E-Mail is invalid. Please provide a valid one.";	
 			}
 			if (form_error) {
-				String path;		
+				String path;				
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 				ctx.setVariable("errorMsg", err_msg);
@@ -83,15 +83,16 @@ public class SignIn extends HttpServlet{
 				path = "/SignIn.html";
 				templateEngine.process(path, ctx, response.getWriter());
 			}
+			
 		} catch (Exception e) {
 			// for debugging only e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());			
 			return;
 		}
 		
-		if(!form_error) {
+		if(!form_error) { // If no errors in form are detected, proceed to try creating the user
 			User user = null;		
-			// Create the new user in database
+	
 			try {
 				user = usrService.createUser(username, password, email);
 			}catch (UserExistsAlreadyException e) {
@@ -108,15 +109,13 @@ public class SignIn extends HttpServlet{
 				ctx.setVariable("errorMsg", err_msg);
 				path = "/SignIn.html";
 				templateEngine.process(path, ctx, response.getWriter());
-	
-			} else {
+				} else {
 				request.getSession().setAttribute("user", user);
 				path = getServletContext().getContextPath() + "/Home";
 				response.sendRedirect(path);
-			}
-		}			
-	}	
-	
+				}
+			}			
+		}	
 	
 	// Form data checks
 	private boolean passwordCheck(String passoword, String password_confirmation) {
@@ -125,6 +124,7 @@ public class SignIn extends HttpServlet{
 	private boolean mailCheck(String mail) {
 		return(RegistrationUtils.isValidEmail(mail));
 	}
+	
 	public void destroy() {
 	}
 	

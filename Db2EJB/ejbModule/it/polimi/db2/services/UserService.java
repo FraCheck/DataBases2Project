@@ -35,6 +35,7 @@ public class UserService {
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 
 	}
+	
 	public User findUserByUsername(String username) throws CredentialsException {
 		List<User> uList = null;
 		try {
@@ -67,32 +68,22 @@ public class UserService {
 	}
 	
 	
-	//Create a new user
+	// Create a new user in the DB
 	public User createUser(String username, String pwd, String email) throws UserExistsAlreadyException, CredentialsException, NonUniqueResultException {
-		System.out.println("Debug test");
+		//System.out.println("Debug test");
 		if(findUserByUsername(username) == null && findUserByEmail(email) == null) {			
 			User user = new User(username, pwd, email);
 			//for debugging: let's check if user is managed
-			System.out.println("Method createUser");
-			System.out.println("Is user object managed?  " + em.contains(user));
+			//System.out.println("Method createUser");
+			//System.out.println("Is user object managed?  " + em.contains(user));
 			
 			em.persist(user);
 			
 			//for debugging: let's check again if user is managed
-			System.out.println("Method createUser");
-			System.out.println("Is user object managed?  " + em.contains(user));
+			//System.out.println("Method createUser");
+			//System.out.println("Is user object managed?  " + em.contains(user));
 			return user;
 		}else
 			throw new UserExistsAlreadyException("You are trying to sign-in with an already registered Username or e-Mail. Please choose something different.");
-			
-	}
-	
-	
-	public void updateProfile(User u) throws UpdateProfileException {
-		try {
-			em.merge(u);
-		} catch (PersistenceException e) {
-			throw new UpdateProfileException("Could not change profile");
-		}
 	}
 }
