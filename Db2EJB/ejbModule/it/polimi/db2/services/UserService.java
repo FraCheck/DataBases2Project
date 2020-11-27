@@ -35,7 +35,7 @@ public class UserService {
 		throw new NonUniqueResultException("More than one user registered with same credentials");
 
 	}
-	public User findUserByUsername(String username) throws CredentialsException, UserExistsAlreadyException {
+	public User findUserByUsername(String username) throws CredentialsException {
 		List<User> uList = null;
 		try {
 			uList = em.createNamedQuery("User.findByUsername", User.class).setParameter(1, username)
@@ -45,13 +45,13 @@ public class UserService {
 		}
 		if (uList.isEmpty())
 			return null;
-		else if (uList.size() == 1)
+		else if (uList.size() == 1) 
 			return uList.get(0);
-		throw new UserExistsAlreadyException("An account with your username is already registered."
-				+ "Please choose a new username");
+		throw new NonUniqueResultException("More than one user registered with same credentials");
+		
 	}
 	
-	public User findUserByEmail(String email) throws CredentialsException, UserExistsAlreadyException {
+	public User findUserByEmail(String email) throws CredentialsException {
 		List<User> uList = null;
 		try {
 			uList = em.createNamedQuery("User.findByEmail", User.class).setParameter(1, email)
@@ -63,24 +63,28 @@ public class UserService {
 			return null;
 		else if (uList.size() == 1)
 			return uList.get(0);
-		throw new UserExistsAlreadyException("An account with your e-Mail is already registered"
-				+ "Please choose a new e-Mail");
+		throw new NonUniqueResultException("More than one user registered with same credentials");
 	}
 	
 	
 	//Create a new user
-	public User createUser(String username, String pwd, String email) throws UserExistsAlreadyException, CredentialsException {
-		if(findUserByUsername(username) == null && findUserByEmail(email) == null) {
-			System.out.println("Debug test");
+	public User createUser(String username, String pwd, String email) throws UserExistsAlreadyException, CredentialsException, NonUniqueResultException {
+		System.out.println("Debug test");
+		if(findUserByUsername(username) == null && findUserByEmail(email) == null) {			
 			User user = new User(username, pwd, email);
 			//for debugging: let's check if user is managed
 			System.out.println("Method createUser");
 			System.out.println("Is user object managed?  " + em.contains(user));
-			//em.persist(user);
-			System.out.println(user.getPassword());
+			
+			em.persist(user);
+			
+			//for debugging: let's check again if user is managed
+			System.out.println("Method createUser");
+			System.out.println("Is user object managed?  " + em.contains(user));
 			return user;
 		}else
-			return null;
+			throw new UserExistsAlreadyException("You are trying to sign-in with an already registered Username or e-Mail. Please choose something different.");
+			
 	}
 	
 	

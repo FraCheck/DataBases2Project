@@ -61,15 +61,15 @@ public class SignIn extends HttpServlet{
 					password.isEmpty() || password_confirmation.isEmpty() || email.isEmpty()) 
 			{
 				form_error = true;
-				err_msg = "Missing or empty required values";				
+				err_msg = "Missing or empty required values. Please try again.";				
 			}
 			else if (!passwordCheck(password,password_confirmation)) {
 				form_error = true;
-				err_msg = "Password doesn't match";				
+				err_msg = "The passwords inserted don't match. Please try again.";				
 			}			
 			else if (!mailCheck(email)) {
 				form_error = true;
-				err_msg = "E-mail is invalid";	
+				err_msg = "E-Mail is invalid. Please provide a valid one.";	
 			}
 			if (form_error) {
 				String path;		
@@ -106,7 +106,7 @@ public class SignIn extends HttpServlet{
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 				ctx.setVariable("errorMsg", err_msg);
-				path = "/index.html";
+				path = "/SignIn.html";
 				templateEngine.process(path, ctx, response.getWriter());
 	
 			} else {
