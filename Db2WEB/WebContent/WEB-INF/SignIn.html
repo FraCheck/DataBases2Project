@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<h1>Welcome to the Marketing Questionnaire Sign-in page</h1>
-		<form action=SignIn method="POST">
+		<form action="SignInCheck" method="POST">
 			Username: <input type="text" name="username" th:value="${username_textbox}" required/><br>
 			Password: <input type="password" name="pwd" th:value="${pwd_textbox}" required><br>
 			Confirm password: <input type="password" name="confirm_pwd" th:value="${confirm_pwd_textbox}" required><br>

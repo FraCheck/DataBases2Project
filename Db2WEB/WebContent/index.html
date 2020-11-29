@@ -3,10 +3,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Login page</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
 </head>
 <body>
+	<div align="right">
+		<a th:href="@{/Signin}">Sign-in</a>
+	</div>
 	<h1>Welcome to the Marketing Questionnaire Application</h1>
-
 	<form action="CheckLogin" method="POST">
 		Username: <input type="text" name="username" required> <br>
 		Password: <input type="password" name="pwd" required><br>

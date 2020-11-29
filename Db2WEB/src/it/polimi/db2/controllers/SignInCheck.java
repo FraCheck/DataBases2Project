@@ -21,15 +21,15 @@ import it.polimi.db2.exceptions.UserExistsAlreadyException;
 import it.polimi.db2.services.UserService;
 import it.polimi.db2.utils.*;
 
-@WebServlet("/SignIn")
-public class SignIn extends HttpServlet{
+@WebServlet("/SignInCheck")
+public class SignInCheck extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	
 	@EJB(name = "it.polimi.db2.services/UserService")
 	private UserService usrService;
 	
-	public SignIn() {
+	public SignInCheck() {
 		super();
 	}
 	

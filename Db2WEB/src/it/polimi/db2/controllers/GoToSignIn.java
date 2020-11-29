@@ -2,7 +2,6 @@ package it.polimi.db2.controllers;
 
 import java.io.IOException;
 
-import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,15 +15,13 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.entities.*;
-import it.polimi.db2.services.*;
 
-@WebServlet("/Home")
-public class GoToHomePage extends HttpServlet {
+@WebServlet("/Signin")
+public class GoToSignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	
-	public GoToHomePage() {
+	public GoToSignIn() {
 		super();
 	}
 
@@ -40,7 +37,7 @@ public class GoToHomePage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = getServletContext().getContextPath() + "/index.html";
+		String loginpath = getServletContext().getContextPath() + "/SignIn.html";
 		HttpSession session = request.getSession();
 		if (session.isNew() || session.getAttribute("user") == null) {
 			response.sendRedirect(loginpath);
@@ -64,3 +61,4 @@ public class GoToHomePage extends HttpServlet {
 	}
 
 }
+

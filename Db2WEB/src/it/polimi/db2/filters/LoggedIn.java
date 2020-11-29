@@ -49,8 +49,8 @@ public class LoggedIn implements Filter {
 	
 		HttpSession session = req.getSession();
 		if (session.isNew() || session.getAttribute("user") == null) {	// If User is not logged yet...
-				res.sendRedirect(loginpath);	// redirect to the login page
-				return;
+			res.sendRedirect(loginpath);	// redirect to the login page
+			return;
 		}
 		// pass the request along the filter chain
 		chain.doFilter(request, response);	
