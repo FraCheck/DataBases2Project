@@ -4,6 +4,7 @@
 		transaction-type="JTA">
 		<jta-data-source>DB2ProjectResource</jta-data-source>
 			<class>it.polimi.db2.entities.User</class>
+			<class>it.polimi.db2.entities.Product</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>
