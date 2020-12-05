@@ -19,14 +19,12 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import it.polimi.db2.entities.*;
 import it.polimi.db2.services.*;
 import it.polimi.db2.entities.Questionnaire;
-@WebServlet("/Home")
-public class GoToHomePage extends HttpServlet {
+@WebServlet("/Questionnaire")
+public class GoToQuestionnairePage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB(name = "it.polimi.db2.services/QuestionnaireService")
-	private QuestionnaireService questionnaireService;
 	
-	public GoToHomePage() {
+	public GoToQuestionnairePage() {
 		super();
 	}
 
@@ -49,11 +47,7 @@ public class GoToHomePage extends HttpServlet {
 		if (session.isNew() || session.getAttribute("user") == null) {
 			path = "/WEB-INF/index.html";
 		}else {
-			path = "/WEB-INF/Home.html";
-			LocalDate today = LocalDate.now();
-			Questionnaire availableQuestionnaire = questionnaireService.findByDate(today);		
-			ctx.setVariable("todayQuestionnaire", availableQuestionnaire);
-				
+			path = "/WEB-INF/Questionnaire.html";		
 		}
 
 		

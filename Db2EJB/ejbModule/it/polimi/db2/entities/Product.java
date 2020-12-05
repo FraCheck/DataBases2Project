@@ -2,8 +2,10 @@ package it.polimi.db2.entities;
 
 import java.io.Serializable;
 import java.util.Base64;
+import java.util.List;
 
 import javax.persistence.*;
+
 
 /**
  * The persistent class for the product database table.
@@ -23,6 +25,17 @@ public class Product implements Serializable {
 	
 	private byte[] photoimage;
 	
+	@OneToMany(mappedBy="product", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true )
+	private List<Review> reviews;
+	
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
 	public Product() {}
 	
 	public Product(int id, String name, byte[] photoimage) {

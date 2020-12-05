@@ -15,8 +15,7 @@ import java.util.List;
 @Stateless
 public class UserService {
 	@PersistenceContext(unitName = "Db2EJB")
-	private EntityManager em;
-
+	private EntityManager em;	
 	public UserService() {
 	}
 
