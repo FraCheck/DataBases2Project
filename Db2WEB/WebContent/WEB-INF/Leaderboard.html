@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 5px;
+}
+</style>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a> 
+		<a th:href="@{/Home}">Go to Homepage</a>
+	</div>
+	<h1>Leaderboard Page</h1>
+
+
+
+	<h1>Welcome to the Leaderboard Page</h1>
+	<p
+		th:text="${'Go find out how did you rank today ' + session.user.username + '!'}"></p>
+	<section>
+		<div th:if="${todayQuestionnaire==null}">
+			<span
+				th:text="' Sorry but no questionnaire means no leaderboard too, come back another day! '"></span>
+		</div>
+		<div th:if="${todayRanking!=null}">
+			<span th:text="'Today best reviewer is: ' + ${todayRanking.get(0).user.getUsername()}"></span>
+		</div>
+	</section>
+	<section>
+		<br />
+		<p>
+		<table style="width: 70%"
+			th:each= "rank: ${todayRanking}">
+			<tr>
+				<th><div th:if="${rank.user.getUsername()!=''}">
+						<span th:text="${rank.user.getUsername()}"></span>
+					</div>
+			</tr>
+			<tr>
+				<td><span th:text="${rank.getPoints()}"></span></td>
+			</tr>
+
+		</table>
+	</section>
+
+
+</body>
+</html>

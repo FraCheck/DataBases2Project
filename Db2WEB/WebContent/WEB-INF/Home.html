@@ -20,6 +20,7 @@ th, td {
 	<div align="right">
 		<a th:href="@{/Logout}">Logout</a>
 	</div>
+
 	<h1>Welcome to the Marketing Questionnaire Home Page</h1>
 	<p th:text="${'Nice to see you ' + session.user.username}"></p>
 	<section >
@@ -46,7 +47,7 @@ th, td {
 						<span th:text="${review.getReviewerName()}"></span>
 					</div>
 					<div th:if="${#strings.isEmpty(review.getReviewerName())}">
-						<span>Unknow reviewer</span>
+						<span>Unknown reviewer</span>
 					</div></th>
 			</tr>
 			<tr>
@@ -58,6 +59,9 @@ th, td {
 	<br />
 	<form action="Questionnaire" method="POST">
 		<input type="submit" value="Fill the questionnaire">
+	</form>
+	<form action="Leaderboard" method="POST">
+		<input type="submit" value="Go check out the leaderboard">
 	</form>
 
 

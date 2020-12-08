@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="ISO-8859-1">
-		<title>Sign-in</title>
-		<link rel="stylesheet" type="text/css" media="all"
-			href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
-	</head>
-	<body>
-		<h1>Welcome to the Marketing Questionnaire Sign-in page</h1>
-		<form action="SignInCheck" method="POST">
-			Username: <input type="text" name="username" th:value="${username_textbox}" required/><br>
-			Password: <input type="password" name="pwd" th:value="${pwd_textbox}" required><br>
-			Confirm password: <input type="password" name="confirm_pwd" th:value="${confirm_pwd_textbox}" required><br>
-			E-mail: <input type="text" name ="mail" th:value="${mail_textbox}" required><br>			
+<head>
+<meta charset="ISO-8859-1">
+<title>Sign-in</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Logout}">Login</a>
+	</div>
+	<h1>Welcome to the Marketing Questionnaire Sign-in page</h1>
+	<form action="SignInCheck" method="POST">
+		Username: <input type="text" name="username"
+			th:value="${username_textbox}" required /><br> Password: <input
+			type="password" name="pwd" th:value="${pwd_textbox}" required><br>
+		Confirm password: <input type="password" name="confirm_pwd"
+			th:value="${confirm_pwd_textbox}" required><br> E-mail:
+		<input type="text" name="mail" th:value="${mail_textbox}" required><br>
 		<input type="submit" value="Sign-in">
 		<p th:text=" ${errorMsg}"></p>
 	</form>
-	</body>
+</body>
 </html>
