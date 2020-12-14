@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="creation">
+		<p>Here you can create a new questionnaire.</p>	
+		<div class="formdiv">
+		<p>Complete the form to add an image to an album</p>
+		<form action="#" th:action="@{/CreatePhoto}" method="POST"
+			enctype="multipart/form-data">
+			<fieldset>
+				<p>
+					<label for="products">Choose a product:</label> <select name="productId"
+						id="productId">
+						<option th:each="p : ${products}" th:value="${p.id}"
+							th:text="${p.name}" ></option>
+					</select>
+				</p>									
+				<input type="submit" name="Create Photo" value="Create">
+			</fieldset>
+		</form>
+	</div>
+					
+			</div>	
+</body>
+
+</html>

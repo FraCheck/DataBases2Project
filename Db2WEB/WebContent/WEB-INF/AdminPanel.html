@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+	font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+	height: 100%;
+	width: 100px;
+	position: fixed;
+	left: 0;
+	top: 5;
+	background-color: #1000;
+	z-index: 1;
+	padding-top: 25px;
+	overflow-x: hidden;
+}
+
+.sidenav a {
+	text-decoration: none;
+	color: #000000;
+	font-size: 21px;
+	display: block;
+	padding: 5px 7px 5px 13px;
+}
+
+.sidenav a:hover {
+	color: #1d4bad;
+}
+
+.main {
+	margin-left: 130px;
+	font-size: 28px;
+	padding: 0px 10px;
+}
+.main p{
+	text-decoration: none;
+	color: #000000;
+	font-size: 13px;
+	display: block;
+}
+</style>
+<title>Admin panel</title>
+</head>
+<body>
+
+	<div class="sidenav">
+		<a th:href="@{/AdminPanel?page=0}">Create</a>
+		<a th:href="@{/AdminPanel?page=1}">Inspect</a>
+		<a th:href="@{/AdminPanel?page=2}">Delete</a>
+	</div>
+	<!-- Page content -->
+	<div class="main">
+		<h3>Admin panel</h3>
+		<div th:if="${page==null}">			
+			<p> Welcome to the Admin Panel. Here you can manage existing or new questionnaires or your customers.<br>
+			Use the menu on the left to navigate to the panel.</p>
+		</div>
+		<div th:if="${page==0}">			
+			<div th:insert="@{CreatePageFragment.html}"></div>
+		</div>
+		<div th:if="${page==1}">			
+			<div th:insert="@{InspectPageFragment.html}"></div>
+		</div>
+		<div th:if="${page==2}">			
+			<div th:insert="@{DeletePageFragment.html}"></div>
+		</div>
+	</div>
+</body>
+</html>

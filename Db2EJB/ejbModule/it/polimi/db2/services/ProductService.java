@@ -1,5 +1,7 @@
 package it.polimi.db2.services;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,5 +17,8 @@ public class ProductService {
 	
 	public Product findById(int id) {
 		return em.find(Product.class, id);
+	}
+	public List<Product> findAllProducts() {
+		return em.createNamedQuery("Product.findAll", Product.class).getResultList();
 	}
 }

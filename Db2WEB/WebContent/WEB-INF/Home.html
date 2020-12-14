@@ -20,6 +20,9 @@ th, td {
 	<div align="right">
 		<a th:href="@{/Logout}">Logout</a>
 	</div>
+	<div align="right" th:if="${session.user.role==1}">
+		<a th:href="@{/AdminPanel}">Admin panel</a>
+	</div>
 
 	<h1>Welcome to the Marketing Questionnaire Home Page</h1>
 	<p th:text="${'Nice to see you ' + session.user.username}"></p>
@@ -39,31 +42,42 @@ th, td {
 	</section>
 	<section>
 		<br />
-		<p>Read some reviews of the product:<p>
-		<table style="width: 70%"
-			th:each="review : ${ todayQuestionnaire.product.getReviews()}">
-			<tr>
-				<th><div th:if="${review.getReviewerName()!=''}">
-						<span th:text="${review.getReviewerName()}"></span>
-					</div>
-					<div th:if="${#strings.isEmpty(review.getReviewerName())}">
-						<span>Unknown reviewer</span>
-					</div></th>
-			</tr>
-			<tr>
-				<td><span th:text="${review.getReviewText()}"></span></td>
-			</tr>
+		<div th:if="${todayQuestionnaire!=null}">
+			<p>Read some reviews of the product:<p>
+			<table style="width: 70%"
+				th:each="review : ${ todayQuestionnaire.product.getReviews()}">
+				<tr>
+					<th><div th:if="${review.getReviewerName()!=''}">
+							<span th:text="${review.getReviewerName()}"></span>
+						</div>
+						<div th:if="${#strings.isEmpty(review.getReviewerName())}">
+							<span>Unknown reviewer</span>
+						</div></th>
+				</tr>
+				<tr>
+					<td><span th:text="${review.getReviewText()}"></span></td>
+				</tr>
 
-		</table>
+			</table>
+		</div>
 	</section>
 	<br />
-	<form action="Questionnaire" method="POST">
-		<input type="submit" value="Fill the questionnaire">
-	</form>
-	<form action="Leaderboard" method="POST">
-		<input type="submit" value="Go check out the leaderboard">
-	</form>
-
-
+	<div th:if="${todayQuestionnaire!=null}">
+		<form action="Questionnaire" method="POST">
+			<input type="submit" value="Fill the questionnaire">
+		</form>
+		<form action="Leaderboard" method="POST">
+			<input type="submit" value="Go check out the leaderboard">
+		</form>
+	</div>
 </body>
+<script type="text/javascript">
+	function createElementHtml(id, tagname) {
+		var containerdiv = document.createElement('div'), nwtag = document
+				.createElement(tagname);
+		nwtag.id = id;
+		containerdiv.appendChild(nwtag);
+		return containerdiv.innerHTML;
+	}
+</script>
 </html>
