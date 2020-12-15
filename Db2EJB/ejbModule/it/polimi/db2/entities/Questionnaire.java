@@ -1,9 +1,12 @@
 package it.polimi.db2.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.sql.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,11 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "questionnaire", schema = "db_project")
-@NamedQueries({ @NamedQuery(name = "Questionnaire.findByDate", query = "SELECT q FROM Questionnaire q WHERE q.date = ?1")})
+@NamedQueries({ @NamedQuery(name = "Questionnaire.findByDate", query = "SELECT q FROM Questionnaire q WHERE q.date = ?1"),
+	@NamedQuery(name = "Questionnaire.findAllFromToday", query = "SELECT q FROM Questionnaire q WHERE q.date >= CURRENT_DATE")})
 public class Questionnaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,11 +33,14 @@ public class Questionnaire implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "product")
 	private Product product;
+
+
+	@OneToMany(mappedBy="questionnaire", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true )
+	private List<MarketingQuestions> marketingQuestions;
 	
 	public Questionnaire() {}
 	
 	public Questionnaire(Date date, Product product) {
-		super();
 		this.date = date;
 		this.product = product;
 	}
@@ -58,5 +66,12 @@ public class Questionnaire implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public List<MarketingQuestions> getMarketingQuestions() {
+		return marketingQuestions;
+	}
+
+	public void setMarketingQuestions(List<MarketingQuestions> marketingQuestions) {
+		this.marketingQuestions = marketingQuestions;
 	}
 }

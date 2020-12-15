@@ -3,6 +3,7 @@
 	<persistence-unit name="Db2EJB" 
 		transaction-type="JTA">
 		<jta-data-source>DB2ProjectResource</jta-data-source>
+			<class>it.polimi.db2.entities.MarketingQuestions</class>
 			<class>it.polimi.db2.entities.Product</class>
 			<class>it.polimi.db2.entities.Questionnaire</class>
 			<class>it.polimi.db2.entities.QuestionnairePoints</class>

@@ -1,8 +1,9 @@
 package it.polimi.db2.controllers;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
-
+import java.sql.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,7 +26,7 @@ public class GoToAdminPanel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	@EJB(name = "it.polimi.db2.services/QuestionnaireService")
-	private QuestionnaireService questionnaireService;
+	private QuestionnaireService qService;
 	@EJB(name = "it.polimi.db2.services/ProductService")
 	private ProductService pService;
 	
@@ -60,11 +61,16 @@ public class GoToAdminPanel extends HttpServlet {
 					page_val =  Integer.parseInt(page);							
 				}
 				path = "/WEB-INF/AdminPanel.html";
+				LocalDate today = LocalDate.now();
+				ctx.setVariable("today", Date.valueOf(today));
 				if (page_val==0) {
 					ctx.setVariable("page", "0");
 					List<Product> products = null;
-					products = pService.findAllProducts();
+					products = pService.findAllProducts();		
 					ctx.setVariable("products", products);
+					List<Questionnaire> questionnaires = null;
+					questionnaires = qService.findAllFromToday();
+					ctx.setVariable("availableQuestionnaires", questionnaires);
 				}else if (page_val==1) {
 					ctx.setVariable("page", "1");
 				}else if (page_val==2) {
