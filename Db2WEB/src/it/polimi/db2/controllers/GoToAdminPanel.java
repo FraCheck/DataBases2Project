@@ -84,6 +84,9 @@ public class GoToAdminPanel extends HttpServlet {
 					
 				}else if (page_val==2) {
 					ctx.setVariable("page", "2");
+					
+					List<Questionnaire> pastQuestionnaires = qService.findPast();				
+					ctx.setVariable("pastQuestionnaires", pastQuestionnaires);
 				}			
 			}			
 		}

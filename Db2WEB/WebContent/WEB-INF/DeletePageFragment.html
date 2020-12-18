@@ -5,6 +5,21 @@
 <body>
 	<div th:fragment="deletion">
 		<p>Here you can delete data related to a questionnaire.</p>	
+		<form action="#" th:action="@{/DeleteQuestionnaire}" method="POST">
+			<fieldset>
+				<p>
+					<label for="pastQuestionnaires">Choose a questionnaire:</label> <select
+						name="pqId" id="pqId">
+						<option th:each="pq : ${pastQuestionnaires}" th:value="${pq.id}"
+							th:text="${pq.date}" 
+							th:selected="${pastQuestionnaireSelectedId} == ${pq.id} ? true : false"></option>
+					</select> <input type="submit" name="Delete" value="Delete">
+				</p>
+
+			</fieldset>
+		</form>
+		<p style="color: red;" th:text=" ${deleteDateSelectionError}"></p>
+		<p style="color:green;" th:text=" ${successDeleteMsg}"></p>	
 	</div>	
 </body>
 

@@ -57,10 +57,16 @@ public class QuestionnaireService {
 		}
 	}
 	
-	// Edit questionnaire product
-	public void updateQuestionnaire(Questionnaire questionnaire, int pId) {
+	// Edit questionnaire's product
+	public void updateQuestionnaire(int qId, int pId) {
 		Product managedProduct = em.find(Product.class, pId);
-		Questionnaire questionnaireManaged = em.find(Questionnaire.class, questionnaire.getId());
+		Questionnaire questionnaireManaged = em.find(Questionnaire.class, qId);
 		questionnaireManaged.setProduct(managedProduct);
+	}
+	
+	// Delete quetionnaire
+	public void deleteQuestionnaire(int qId) {
+		Questionnaire managedQuestionnaire = em.find(Questionnaire.class, qId);
+		em.remove(managedQuestionnaire);
 	}
 }

@@ -104,7 +104,7 @@ public class AddProductToQuestionnaire extends HttpServlet{
 					successAddMsg = "Questionnarie for the current date created!";
 					ctx.setVariable("availableQuestionnaires", availableQuestionnaires);
 				}else { // Edit existing questionnaire's product
-					qService.updateQuestionnaire(questionnaire, pId);
+					qService.updateQuestionnaire(questionnaire.getId(), pId);
 					successAddMsg = "The questionnaire's product has been updated!";
 				}
 				ctx.setVariable("successAddMsg", successAddMsg);
