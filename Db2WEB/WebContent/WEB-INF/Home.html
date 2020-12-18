@@ -35,17 +35,22 @@ th, td {
 				th:text="' We got a new questionnaire for you! Have a look at this product: '" ></span>
 			<br /> <span
 				th:text="${'Product name: ' + todayQuestionnaire.product.getName()}"></span>
-			<br /> <a> <img width="500px" alt="Product picture" 
+			<br /> 
+			<div th:if="${todayQuestionnaire.product.getPhotoimageData()!=''}">
+			<a> <img width="500px" alt="Product picture" 
 				th:src="*{'data:image/png;base64,'+ todayQuestionnaire.product.getPhotoimageData()}">
 			</a>
+			</div>
+			<div th:if="${todayQuestionnaire.product.getPhotoimageData()==''}">
+				<p>No image available<p>
+			</div>
 		</div>
-	</section>
-	<section>
+		<section>
 		<br />
-		<div th:if="${todayQuestionnaire!=null}">
+		<div th:if="${todayQuestionnaire.product.getReviews()!=null}">
 			<p>Read some reviews of the product:<p>
 			<table style="width: 70%"
-				th:each="review : ${ todayQuestionnaire.product.getReviews()}">
+				th:each="review : ${todayQuestionnaire.product.getReviews()}">
 				<tr>
 					<th><div th:if="${review.getReviewerName()!=''}">
 							<span th:text="${review.getReviewerName()}"></span>
@@ -60,7 +65,12 @@ th, td {
 
 			</table>
 		</div>
+		<div th:if="${todayQuestionnaire.product.getReviews()==null}">
+		<p>No reviews available for this product.</p>
+		</div>
 	</section>
+	</section>
+	
 	<br />
 	<div th:if="${todayQuestionnaire!=null}">
 		<form action="Questionnaire" method="POST">
@@ -71,13 +81,4 @@ th, td {
 		</form>
 	</div>
 </body>
-<script type="text/javascript">
-	function createElementHtml(id, tagname) {
-		var containerdiv = document.createElement('div'), nwtag = document
-				.createElement(tagname);
-		nwtag.id = id;
-		containerdiv.appendChild(nwtag);
-		return containerdiv.innerHTML;
-	}
-</script>
 </html>

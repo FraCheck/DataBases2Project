@@ -82,6 +82,8 @@ public class AddProductToQuestionnaire extends HttpServlet{
 			
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());						
+			
+			// Re-set necessary variables for a correct and consistent page processing
 			ctx.setVariable("today", java.sql.Date.valueOf(today));
 			ctx.setVariable("page", "0");
 			ctx.setVariable("products", products);
@@ -91,9 +93,13 @@ public class AddProductToQuestionnaire extends HttpServlet{
 				ctx.setVariable("addProdErrorMsg", err_msg);
 			else {
 				String successAddMsg = null;
+				// Find questionnaire based on input date by the user
 				questionnaire = qService.findByDate(selectedDate);
-				if (questionnaire == null) { // Create a new questionnaire
+				if (questionnaire == null) { // It's a new questionnaire -> create a new questionnaire
 					questionnaire = qService.createQuestionnaire(selectedDate, pService.findById(pId));
+					
+					// Update the available questionnaires variable in order to have an updated list
+					// (considering the one we just added)
 					availableQuestionnaires = qService.findAllFromToday();
 					successAddMsg = "Questionnarie for the current date created!";
 					ctx.setVariable("availableQuestionnaires", availableQuestionnaires);

@@ -30,6 +30,8 @@ public class Product implements Serializable {
 	private List<Review> reviews;
 	
 	public List<Review> getReviews() {
+		if (reviews.size()==0)
+			return null;
 		return reviews;
 	}
 
@@ -67,7 +69,9 @@ public class Product implements Serializable {
 	}
 	
 	public String getPhotoimageData() {
-		return Base64.getMimeEncoder().encodeToString(photoimage);
+		if(photoimage!=null)
+			return Base64.getMimeEncoder().encodeToString(photoimage);
+		return "";
 	}
 
 	public void setPhotoimage(byte[] photoimage) {

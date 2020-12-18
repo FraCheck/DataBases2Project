@@ -1,11 +1,132 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
 
+th, td {
+	padding: 5px;
+}
+</style>
+</head>
 <body>
 	<div th:fragment="inspection">
-		<p>Here you can inspect an existing questionnaire.</p>	
-	</div>	
-</body>
+		<p>Here you can inspect an existing questionnaire.</p>
+		<form action="#" th:action="@{/LoadInspectionUsers}" method="POST">
+			<fieldset>
+				<p>
+					<label for="pastQuestionnaires">Choose a questionnaire:</label> <select
+						name="pqId" id="pqId">
+						<option th:each="pq : ${pastQuestionnaires}" th:value="${pq.id}"
+							th:text="${pq.date}" 
+							th:selected="${pastQuestionnaireSelectedId} == ${pq.id} ? true : false"></option>
+					</select> <input type="submit" name="Inspect" value="Inspect">
+				</p>
 
+			</fieldset>
+		</form>
+		<p style="color: red;" th:text=" ${InspectDataSelectionError}"></p>
+		<div th:if="${pastQuestionnaireSelectedId!=null}">
+			<table style="border: 0;">
+				<tr>
+					<th><form action="#" th:action="@{/LoadUserAnswers}"
+							method="POST">
+							<fieldset>
+								<p>
+									<label for="usersWithQuestionnaire">Choose an user to
+										inspect:</label><br>
+								</p>
+								<select name="pqUAId" size=10
+									id="pqUAId" required>
+									<optgroup label="Users who compiled the
+										questionnaire"></optgroup>
+									<option th:each="u : ${usersWithQuestionnaire}"
+										th:value="${u.id}" th:text="${u.user.username}"
+										th:selected="${selectedQuestionnaireAnswerId} == ${u.id} ? true : false"></option>
+								</select>
+								<input type="submit" name="Load the user answers"
+									value="Load the user answers">
+							</fieldset>
+						</form></th>
+					<th>
+						<p>
+							<label for="usersWithQuestionnaire">Users who
+								cancelled the questionnaire:</label><br>
+						</p> <select name="userWithCancelledQuestionnaireListbox" size=10>
+							<optgroup label="Users who cancelled the
+								questionnaire"></optgroup>
+							<option th:each="uc : ${usersWithCancelledQuestionnaire}"
+								th:value="${uc.id}" th:text="${uc.user.username}"></option>
+					</select>
+					</th>
+				</tr>
+			</table>		
+		</div>
+		<div th:if="${marketingAnswers!=null}">
+				<p>User marketing answers to the questionnaire:</p>
+				<table style="width: 70%"
+					th:each="m : ${marketingAnswers}">
+					<tr>
+						<th><div>
+								<p th:text="${m.question.getQuestion()}"></p>
+							</div>
+						</th>
+					</tr>
+					<tr>
+						<td><p th:text="${m.getAnswer()}"></p></td>
+					</tr>
+				</table>
+				<br>
+				<p>User statistical answers to the questionnaire:</p>
+				<table style="width: 10%">
+					<tr>
+						<th><div>
+								<p>Age</p>
+							</div>
+						</th>
+						<th>
+							<div th:if="${selectedQuestionnaireUserAnswer.getAge()!=-1}">
+								<p th:text="${selectedQuestionnaireUserAnswer.getAge()}"></p>
+							</div>
+							<div th:if="${selectedQuestionnaireUserAnswer.getAge()==-1}">
+								<p>No data provided by the user</p>
+							</div>			
+						</th>
+					</tr>
+					<tr>
+						<th><div>
+								<p>Sex</p>
+							</div>
+						</th>
+						<th>
+							<div th:if="${selectedQuestionnaireUserAnswer.getSex()!=''}">
+								<p th:text="${selectedQuestionnaireUserAnswer.getSex()}"></p>
+							</div>
+							<div th:if="${selectedQuestionnaireUserAnswer.getSex()==''}">
+								<p>No data provided by the user</p>
+							</div>	
+						</th>
+					</tr>
+					<tr>
+						<th><div>
+								<p>Expertise Level</p>
+							</div>	
+						</th>
+						<th>
+							<div th:if="${selectedQuestionnaireUserAnswer.getExpertise_level()!=-1}">
+								<p th:text="${selectedQuestionnaireUserAnswer.getExpertise_level()}"></p>
+							</div>
+							<div th:if="${selectedQuestionnaireUserAnswer.getExpertise_level()==-1}">
+								<p>No data provided by the user</p>
+							</div>
+						</th>
+					</tr>
+				</table>
+		</div>
+	</div>
+</body>
 </html>

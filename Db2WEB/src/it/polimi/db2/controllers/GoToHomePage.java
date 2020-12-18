@@ -53,7 +53,7 @@ public class GoToHomePage extends HttpServlet {
 			LocalDate today = LocalDate.now();
 			Questionnaire availableQuestionnaire = questionnaireService.findByDate(today);		
 			ctx.setVariable("todayQuestionnaire", availableQuestionnaire);
-				
+			
 		}
 
 		

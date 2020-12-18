@@ -18,9 +18,12 @@ public class MarketingQuestionsService {
 	public MarketingQuestions findById(int id) {
 		return em.find(MarketingQuestions.class, id);
 	}
+	
 	public List<MarketingQuestions> findByQuestionnaire(int qId){
 		List<MarketingQuestions> results = em.createNamedQuery("Questionnaire.findByQuestionnaire", MarketingQuestions.class).setParameter(1, qId)
 				.getResultList();
+		if (results.isEmpty())
+			return null;
 		return results;
 	}
 	

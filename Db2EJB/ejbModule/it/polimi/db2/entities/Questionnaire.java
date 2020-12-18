@@ -20,7 +20,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "questionnaire", schema = "db_project")
 @NamedQueries({ @NamedQuery(name = "Questionnaire.findByDate", query = "SELECT q FROM Questionnaire q WHERE q.date = ?1"),
-	@NamedQuery(name = "Questionnaire.findAllFromToday", query = "SELECT q FROM Questionnaire q WHERE q.date >= CURRENT_DATE")})
+	@NamedQuery(name = "Questionnaire.findAllFromToday", query = "SELECT q FROM Questionnaire q WHERE q.date >= CURRENT_DATE"),
+	@NamedQuery(name = "Questionnaire.findPast", query = "SELECT q FROM Questionnaire q WHERE q.date < CURRENT_DATE")})
 public class Questionnaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 

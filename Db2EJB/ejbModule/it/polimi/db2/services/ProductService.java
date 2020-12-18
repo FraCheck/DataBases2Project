@@ -18,7 +18,11 @@ public class ProductService {
 	public Product findById(int id) {
 		return em.find(Product.class, id);
 	}
+	
 	public List<Product> findAllProducts() {
-		return em.createNamedQuery("Product.findAll", Product.class).getResultList();
-	}
+		List <Product> results = em.createNamedQuery("Product.findAll", Product.class).getResultList();
+		if (results.isEmpty())
+			return null;
+		return results;
+	}	
 }

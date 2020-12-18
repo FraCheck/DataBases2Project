@@ -33,6 +33,15 @@ public class QuestionnaireService {
 	public List<Questionnaire> findAllFromToday(){
 		List<Questionnaire> results = em.createNamedQuery("Questionnaire.findAllFromToday", Questionnaire.class)
 				.getResultList();
+		if (results.isEmpty())
+			return null;
+		return results;
+	}
+	public List<Questionnaire> findPast(){
+		List<Questionnaire> results = em.createNamedQuery("Questionnaire.findPast", Questionnaire.class)
+				.getResultList();
+		if (results.isEmpty())
+			return null;
 		return results;
 	}
 	

@@ -3,7 +3,6 @@ package it.polimi.db2.controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -20,7 +19,7 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.entities.MarketingQuestions;
+
 import it.polimi.db2.entities.Product;
 import it.polimi.db2.entities.Questionnaire;
 import it.polimi.db2.services.MarketingQuestionsService;
@@ -61,20 +60,25 @@ public class AddQuestionToQuestionnaire extends HttpServlet{
 		String err_msg = null; // Error reporting message
 		String path;
 	
-		int qId;
-		String marketingQuestion;
+		int qId; // Questionnaire id
+		String marketingQuestion; // Marketing question to add
 		
-		LocalDate today = LocalDate.now();
+		LocalDate today = LocalDate.now(); 
 		Questionnaire questionnaire = null;
+		
+		// Re-load all available products to have consistency in the page
 		List<Product> products = null;
 		products = pService.findAllProducts();
-		List<Questionnaire> availableQuestionnaires = null;
-		availableQuestionnaires = qService.findAllFromToday();
+		
+		// Load the questionnaires to which we can add a question to
+		List<Questionnaire> availableQuestionnaires = qService.findAllFromToday();
+		
 		try {
 			// Get and escape parameters
 			qId = Integer.parseInt(request.getParameter("qId"));
 			marketingQuestion = StringEscapeUtils.escapeJava(request.getParameter("marketingQuestion"));
-			// Check for valid questionnaire and marketin question
+			
+			// Check for valid questionnaire and marketing question
 			boolean validQuestionnaire = false;
 			for(int i=0; i<availableQuestionnaires.size();i++)
 				if (availableQuestionnaires.get(i).getId() == qId)
@@ -91,6 +95,8 @@ public class AddQuestionToQuestionnaire extends HttpServlet{
 			
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());						
+			
+			// Re-set necessary variables for a correct and consistent page processing
 			ctx.setVariable("today", java.sql.Date.valueOf(today));
 			ctx.setVariable("page", "0");
 			ctx.setVariable("availableQuestionnaires", availableQuestionnaires);
@@ -101,7 +107,10 @@ public class AddQuestionToQuestionnaire extends HttpServlet{
 				ctx.setVariable("${addQuestionErrorMsg}", err_msg);
 			else {
 				String successAddMsg = null;
+				
+				// Find the questionnaire selected by the user...
 				questionnaire = qService.findById(qId);
+				// ... And add the question to it
 				mService.createQuestion(questionnaire, marketingQuestion);
 				successAddMsg = "The question has been added to the questionnaire!";
 				ctx.setVariable("successAddQuestionMsg", successAddMsg);
