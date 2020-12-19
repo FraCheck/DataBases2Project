@@ -50,10 +50,15 @@ public class GoToHomePage extends HttpServlet {
 			path = "/WEB-INF/index.html";
 		}else {
 			path = "/WEB-INF/Home.html";
+			User user = (User)session.getAttribute("user");
+			if (user.getBanned()) {
+				ctx.setVariable("banned",true);
+			}else {
 			LocalDate today = LocalDate.now();
 			Questionnaire availableQuestionnaire = questionnaireService.findByDate(today);		
 			ctx.setVariable("todayQuestionnaire", availableQuestionnaire);
-			
+			ctx.setVariable("banned",false);
+			}		
 		}
 
 		

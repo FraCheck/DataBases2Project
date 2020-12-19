@@ -25,7 +25,7 @@ public class User implements Serializable {
 	
 	private String email;
 	
-	private int banned;
+	private boolean banned;
 	
 	private int role;
 
@@ -54,11 +54,11 @@ public class User implements Serializable {
 		this.role = role;
 	}
 	
-	public int getBanned() {
+	public boolean getBanned() {
 		return this.banned;
 	}
 
-	public void setBanned(int banned) {
+	public void setBanned(boolean banned) {
 		this.banned = banned;
 	}
 
