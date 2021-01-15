@@ -12,20 +12,16 @@ th, td {
 }
 </style>
 <meta charset="ISO-8859-1">
-<title>Questionnaire</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+	<title>Thank you for filling the questionnaire!</title>
 </head>
 <body>
 	<div align="right">
+		<a th:href="@{/Logout}">Logout</a> 
 		<a th:href="@{/Home}">Go to Homepage</a>
 	</div>
-	
-	<form action="Questionnaire" method="POST">
-	<label th:text= "${question}" ></label><br>  
-    <input type="text" name="answer" required><br>
-    <input type="submit" value="next">    
-    </form>
+	<h1>Thank you for filling the questionnaire!</h1>
 
 </body>
 </html>

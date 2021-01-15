@@ -64,7 +64,7 @@ public class QuestionnaireService {
 		questionnaireManaged.setProduct(managedProduct);
 	}
 	
-	// Delete quetionnaire
+	// Delete questionnaire
 	public void deleteQuestionnaire(int qId) {
 		Questionnaire managedQuestionnaire = em.find(Questionnaire.class, qId);
 		em.remove(managedQuestionnaire);

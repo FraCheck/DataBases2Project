@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import it.polimi.db2.entities.MarketingAnswers;
 import it.polimi.db2.entities.MarketingQuestions;
+import it.polimi.db2.entities.QuestionnaireUserAnswers;
 
 @Stateless
 public class MarketingAnswersService {
@@ -36,6 +37,11 @@ public class MarketingAnswersService {
 		return results;
 	}
 	
-	// Create a new answer for a questionnaire
+	public void createAnswer(QuestionnaireUserAnswers questionnaireUserAnswer, MarketingQuestions question, String answer) {
+		MarketingAnswers ans = new MarketingAnswers(questionnaireUserAnswer, question, answer);
+		
+		em.persist(ans);
+		
+	}
 }
 

@@ -1,7 +1,9 @@
 package it.polimi.db2.entities;
 
+
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,6 +18,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+
+import it.polimi.db2.services.MarketingQuestionsService;
+import util.MandatoryAnswersStorage;
 
 @Entity
 @Table(name = "questionnaire_user_answers", schema = "db_project")
@@ -37,6 +44,13 @@ public class QuestionnaireUserAnswers implements Serializable {
 	
 	private boolean cancelled;
 	
+	private int mandatory_answers;
+	
+	private int optional_answers;
+	
+	private Timestamp date_cancellation;
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "questionnaire")
 	private Questionnaire questionnaire;
@@ -48,22 +62,44 @@ public class QuestionnaireUserAnswers implements Serializable {
 	@OneToMany(mappedBy="questionnaireUserAnswer", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true )
 	private List <MarketingAnswers> marketingAnswers;
 	
-	private int optional_answers;
-	
-	private int mandatory_answers;
-	
 	public QuestionnaireUserAnswers() {}
 	
-	public QuestionnaireUserAnswers(int age, char sex, int expertise_level, boolean cancelled,
-			Questionnaire questionnaire, User user, int optional_answers, int mandatory_answers) {
+	
+	//Constructor for answers submitted
+	public QuestionnaireUserAnswers(int age, char sex, int expertise_level, Questionnaire questionnaire, User user, int optional_answers, int mandatory_answers) {
+		
 		this.age = age;
 		this.sex = sex;
 		this.expertise_level = expertise_level;
-		this.cancelled = cancelled;
+		this.cancelled = false;
 		this.questionnaire = questionnaire;
 		this.user = user;
 		this.optional_answers = optional_answers;
 		this.mandatory_answers = mandatory_answers;
+	}
+	
+	//Constructor for answers cancelled
+	public QuestionnaireUserAnswers(Questionnaire questionnaire, User user, Timestamp date) {
+		this.cancelled = true;
+		this.date_cancellation = date;
+		this.user = user;
+		this.questionnaire = questionnaire;
+		
+	}
+
+	//To Add checks for correctness(?)
+	public void addMarketingAnswers(Questionnaire questionnaire, MandatoryAnswersStorage list) {
+		MarketingQuestionsService service = new MarketingQuestionsService();
+		int length = list.getSize(); 
+		for(int i = 0; i< length; i ++) {
+		
+			int id = list.removeAnswer_1();
+			String answer = list.removeAnswer_2();
+		   marketingAnswers.add(new MarketingAnswers(this, service.findById(id), answer));
+		
+		}
+		
+		
 	}
 
 	public int getId() {
@@ -137,6 +173,16 @@ public class QuestionnaireUserAnswers implements Serializable {
 	public void setMandatory_answers(int mandatory_answers) {
 		this.mandatory_answers = mandatory_answers;
 	}
+
+	public Timestamp getDate_cancellation() {
+		return date_cancellation;
+	}
+
+	public void setDate_cancellation(Timestamp date_cancellation) {
+		this.date_cancellation = date_cancellation;
+	}
+
+
 
 	
 }

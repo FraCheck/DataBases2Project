@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "marketing_questions", schema = "db_project")
-@NamedQueries({ @NamedQuery(name = "MarketingQuestions.findByQuestionnaire", query = "SELECT m FROM MarketingQuestions m WHERE m.questionnaire = ?1")})
+@NamedQueries({ @NamedQuery(name = "MarketingQuestions.findByQuestionnaire", query = "SELECT m FROM MarketingQuestions m  WHERE m.questionnaire = ?1")})
 public class MarketingQuestions implements Serializable {
 	private static final long serialVersionUID = 1L;
 

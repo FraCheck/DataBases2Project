@@ -1,7 +1,9 @@
 package it.polimi.db2.controllers;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,21 +18,29 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.entities.*;
-import it.polimi.db2.services.*;
 import it.polimi.db2.entities.Questionnaire;
+import it.polimi.db2.entities.User;
+import it.polimi.db2.services.QuestionnaireService;
+import it.polimi.db2.services.QuestionnaireUserAnswersService;
 
-@WebServlet("/Home")
-public class GoToHomePage extends HttpServlet {
+@WebServlet("/QuestionnaireDeleted")
+public class QuestionnaireDeleted extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB(name = "it.polimi.db2.services/QuestionnaireService")
-	private QuestionnaireService questionnaireService;
 	
-	public GoToHomePage() {
+	@EJB(name = "it.polimi.db2.services/QuestionnaireUserAnswersService")
+	private QuestionnaireUserAnswersService service = new QuestionnaireUserAnswersService();
+	
+	@EJB(name = "it.polimi.db2.services/Questionnaire")
+	private QuestionnaireService qService = new QuestionnaireService();
+	
+	
+	private  User user;
+	
+	public QuestionnaireDeleted() {
 		super();
 	}
-
+	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -39,7 +49,7 @@ public class GoToHomePage extends HttpServlet {
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
 	}
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String path;
@@ -51,33 +61,31 @@ public class GoToHomePage extends HttpServlet {
 			path = "/WEB-INF/index.html";
 		}else {
 			path = "/WEB-INF/Home.html";
-			User user = (User)session.getAttribute("user");
-			
-			request.getSession().setAttribute("questions_done", 0);
-			request.getSession().setAttribute("completequestionnaire", false);
-			
-			
-			if (user.getBanned()) {
-				ctx.setVariable("banned",true);
-			}else {
-			LocalDate today = LocalDate.now();
-			Questionnaire availableQuestionnaire = questionnaireService.findByDate(today);		
-			ctx.setVariable("todayQuestionnaire", availableQuestionnaire);
-			ctx.setVariable("banned",false);
-			}		
+			user = (User)session.getAttribute("user");
 		}
 
 		
 
 		templateEngine.process(path, ctx, response.getWriter());
 	}
-
+	
+	
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+	
 		doGet(request, response);
+		
+		LocalDate date = LocalDate.now();
+		Questionnaire questionnaire = qService.findByDate(date);
+		
+		Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
+		 
+		
+		service.deleteAnswer(user, questionnaire, timestamp);
 	}
-
+	
 	public void destroy() {
 	}
-
+	
 }

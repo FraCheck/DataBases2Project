@@ -47,6 +47,10 @@ body {
 <title>Admin panel</title>
 </head>
 <body>
+<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+		<a th:href="@{/Home}">Go to Homepage</a>
+	</div>
 
 	<div class="sidenav">
 		<a th:href="@{/AdminPanel?page=0}">Create</a>

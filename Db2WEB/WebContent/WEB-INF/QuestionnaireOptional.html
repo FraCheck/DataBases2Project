@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 5px;
+}
+</style>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+	<title>Optional Statistical Questions</title>
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Home}">Go to Homepage</a>
+	</div>
+	<h1>Optional Statistical Questions</h1>
+	
+	
+	<form >
+<label>Enter your age (optional): </label>  
+    <input type="number" name="Age" min="1" max="99">   
+<BR>
+Sex (optional):
+<SELECT NAME="Sex" ><OPTION>
+<OPTION VALUE=1 >Male
+<OPTION VALUE=2 >Female
+<OPTION VALUE=3 >I'd rather not specify my gender
+</SELECT>
+<BR> 
+<BR>
+Level of Expertise (optional)
+<SELECT NAME="MyExpertise" ><OPTION>
+<OPTION VALUE=1 >Low
+<OPTION VALUE=2 >Medium
+<OPTION VALUE=3 >High
+</SELECT>
+ 
+<BR>
+   </form>
+	<div>
+			<form action="AnswerSender" method="POST">
+				<input type="submit" value="Submit">
+			</form>
+			<form action="QuestionnaireDeleted" method="POST">
+				<input type="submit" value="Cancel">
+			</form>
+		</div>
+
+</body>
+</html>

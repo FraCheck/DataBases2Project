@@ -1,12 +1,14 @@
 package it.polimi.db2.services;
 
-
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 import it.polimi.db2.entities.*;
 
@@ -14,6 +16,7 @@ import it.polimi.db2.entities.*;
 public class QuestionnaireUserAnswersService {
 	@PersistenceContext(unitName = "Db2EJB")
 	private EntityManager em;
+	private MarketingAnswersService service;
 
 	public QuestionnaireUserAnswersService() {}
 	
@@ -37,6 +40,24 @@ public class QuestionnaireUserAnswersService {
 		return results;
 	}
 	
-	// Create a new QuestionnaireUserAnswers
+	public QuestionnaireUserAnswers createAnswer(int age, char sex, int expertise, Questionnaire questionnaire, User user, int optional_answers, int mandatory_answers) {
+		
+		    QuestionnaireUserAnswers answer = new QuestionnaireUserAnswers(age, sex, expertise, questionnaire, user, optional_answers, mandatory_answers);
+		   
+			em.persist(answer);
+			
+			return answer;
+	}
+	
+	
+	public QuestionnaireUserAnswers deleteAnswer(User user, Questionnaire questionnaire, Timestamp date) {
+		
+	    QuestionnaireUserAnswers answer = new QuestionnaireUserAnswers(questionnaire, user, date);
+	
+		
+		em.persist(answer);
+		
+		return answer;
+}
 	
 }
