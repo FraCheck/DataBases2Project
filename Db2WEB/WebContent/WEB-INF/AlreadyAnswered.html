@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 5px;
+}
+</style>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/mystyle.css" th:href="@{/css/mystyle.css}" />
+	<title>You already Answered</title>
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a> 
+		<a th:href="@{/Home}">Go to Homepage</a>
+	</div>
+	<h1>You already answered, please come back another day for a brand new questionnaire</h1>
+
+</body>
+</html>

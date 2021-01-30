@@ -1,14 +1,11 @@
 package it.polimi.db2.services;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 import it.polimi.db2.entities.*;
 
@@ -16,7 +13,6 @@ import it.polimi.db2.entities.*;
 public class QuestionnaireUserAnswersService {
 	@PersistenceContext(unitName = "Db2EJB")
 	private EntityManager em;
-	private MarketingAnswersService service;
 
 	public QuestionnaireUserAnswersService() {}
 	
@@ -58,6 +54,14 @@ public class QuestionnaireUserAnswersService {
 		em.persist(answer);
 		
 		return answer;
-}
+    }
+	
+	public boolean userAlreadyAnswered(User user, int qId) {
+		List<QuestionnaireUserAnswers> results = em.createNamedQuery("QuestionnaireUserAnswers.findByQuestionnaireUser", QuestionnaireUserAnswers.class).setParameter("1",qId).setParameter("2", user).getResultList();
+		if (!results.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
 	
 }

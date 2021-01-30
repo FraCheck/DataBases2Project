@@ -33,6 +33,9 @@ public class GoToQuestionnairePage extends HttpServlet {
 	@EJB(name = "it.polimi.db2.services/QuestionnaireService")
 	private QuestionnaireService questionnaireService;
 	
+	@EJB(name = "it.polimi.db2.services/QuestionnaireSUserAnswersService")
+	private QuestionnaireUserAnswersService service;
+	
 	public GoToQuestionnairePage() {
 		super();
 	}
@@ -59,8 +62,16 @@ public class GoToQuestionnairePage extends HttpServlet {
 			
 			path = "/WEB-INF/Home.html";
 			
+			LocalDate date = LocalDate.now();
+			
+			
+		    Questionnaire q = questionnaireService.findByDate(date);
+		    
+		    int qId = q.getId();
+			
 			int questions_done = (int) request.getSession().getAttribute("questions_done");
-			boolean completed = (boolean) request.getSession().getAttribute("completequestionnaire");
+			boolean completed = service.userAlreadyAnswered((User) session.getAttribute("user"),qId);
+			
 			
 			
 			if(!completed) {
@@ -73,12 +84,9 @@ public class GoToQuestionnairePage extends HttpServlet {
 				
 				if(questions_done == 0) {
 					//Questionnaire started
-					LocalDate date = LocalDate.now();
 					
-					
-				    Questionnaire quest = questionnaireService.findByDate(date);
 				    
-				    List<MarketingQuestions> qList = questionService.findByQuestionnaire(quest);
+				    List<MarketingQuestions> qList = questionService.findByQuestionnaire(q);
 				    
 				    
 				    try {
@@ -111,6 +119,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 			ctx.setVariable("question", current_question );
 		}
 				
+	}else {  path = "/WEB-INF/AlreadyAnswered.html";
 	}
 
 		}

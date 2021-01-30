@@ -23,7 +23,8 @@ th, td {
 	<h1>Optional Statistical Questions</h1>
 	
 	
-	<form >
+	<form action="#" th:action="@{/AnswerSender}" method="POST">
+				
 <label>Enter your age (optional): </label>  
     <input type="number" name="Age" min="1" max="99">   
 <BR>
@@ -42,12 +43,10 @@ Level of Expertise (optional)
 <OPTION VALUE=3 >High
 </SELECT>
  
+ <input type="submit" value="Submit">
 <BR>
    </form>
 	<div>
-			<form action="AnswerSender" method="POST">
-				<input type="submit" value="Submit">
-			</form>
 			<form action="QuestionnaireDeleted" method="POST">
 				<input type="submit" value="Cancel">
 			</form>

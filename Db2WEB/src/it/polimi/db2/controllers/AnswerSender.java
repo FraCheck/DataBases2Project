@@ -47,9 +47,6 @@ public class AnswerSender extends HttpServlet{
 	}
 	
 	private  User user;
-	private int age;
-	private char sex;
-	private int expertise; 
 	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -87,12 +84,6 @@ public class AnswerSender extends HttpServlet{
 			throws ServletException, IOException {
 		    doGet(request,response);
 			
-			String age_input = null;
-			String sex_input = null;
-			String expertise_input = null;
-			
-			int optional_answers = 0;
-			
 			LocalDate date = LocalDate.now();
 			
 			Questionnaire questionnaire = qService.findByDate(date);
@@ -101,38 +92,63 @@ public class AnswerSender extends HttpServlet{
 			
 			int mandatory_answers = questionsList.size();
 			
+			int age = 0;
+			char sex = 0;
+			int expertise = 0;
+			int optional_answers = 0;
+
+			String age_input = null;
+			String sex_input = null;
+			String expertise_input = null;
+			
+			optional_answers = 0;
+			
 			try {
 				age_input = request.getParameter("Age");
+				
+				System.out.println(request.getParameter("Age"));
+				System.out.println(request.getParameter("Sex"));
+				System.out.println(request.getParameter("MyExpertise"));
 				
 				sex_input = request.getParameter("Sex");
 				
 				expertise_input = request.getParameter("MyExpertise");
-			}catch(Exception e) {}
+			}catch(Exception e) {
+				System.out.println("Errors when retrieving optional answers!");
+			}
 			
 			if(age_input != null) {
-				optional_answers++;
-				age = Integer.parseInt(age_input);
+				try{
+					age = Integer.parseInt(age_input);
+					optional_answers++;
+				}catch(NumberFormatException e){}
 			}
 			
 			if(sex_input != null) {
-				optional_answers++;
-				if(sex_input.equalsIgnoreCase("Male")) {
+				
+				if(sex_input.equalsIgnoreCase("1")) {
 					sex = 'M';
-				}else if(sex_input.equalsIgnoreCase("Female")) {
+					optional_answers++;
+				}else if(sex_input.equalsIgnoreCase("2")) {
 					sex = 'F';
-				}else{
+					optional_answers++;
+				}else if(sex_input.equalsIgnoreCase("3")){
 					sex = 'N';
+					optional_answers++;
 				}
 			}
 			
 			if(expertise_input != null) {
-				optional_answers++;
-				if(expertise_input.equalsIgnoreCase("Low")) {
+				
+				if(expertise_input.equalsIgnoreCase("1")) {
 					expertise = 1;
-				}else if(expertise_input.equalsIgnoreCase("Medium")) {
+					optional_answers++;
+				}else if(expertise_input.equalsIgnoreCase("2")) {
 					expertise = 2;
-				}else{
+					optional_answers++;
+				}else if(expertise_input.equalsIgnoreCase("3")) {
 					expertise = 3;
+					optional_answers++;
 				}
 			}
 			
@@ -141,17 +157,14 @@ public class AnswerSender extends HttpServlet{
 			
 			QuestionnaireUserAnswers q = service.createAnswer(age, sex, expertise, questionnaire, user, optional_answers, mandatory_answers);
 			
-			
 			for(int i = 0; i< storedAnswers.length; i++) {
 				
-				int id = questionsList.get(i).getId(); // CHECK FOR ERRORS
+				int id = questionsList.get(i).getId(); // CHECK FOR ERRORS(?)
 				String ans = storedAnswers[i];
 				
 				answersService.createAnswer(q, answersService.findById(id) , ans);
 			}
 			
-			
-			request.getSession().setAttribute("completequestionnaire", true);
 		}
 	
 	public void destroy() {

@@ -3,7 +3,6 @@ package it.polimi.db2.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,8 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
-
 import it.polimi.db2.services.MarketingQuestionsService;
 import util.MandatoryAnswersStorage;
 
@@ -28,6 +25,7 @@ import util.MandatoryAnswersStorage;
 @Table(name = "questionnaire_user_answers", schema = "db_project")
 @NamedQueries({@NamedQuery(name = "QuestionnaireUserAnswers.findByUser", query = "SELECT q FROM QuestionnaireUserAnswers q WHERE q.user.id = ?1"),
 	@NamedQuery(name = "QuestionnaireUserAnswers.findByQuestionnaire", query = "SELECT q FROM QuestionnaireUserAnswers q WHERE q.questionnaire.id = ?1 AND q.cancelled=false"),
+	@NamedQuery(name = "QuestionnaireUserAnswers.findByQuestionnaireUser", query = "SELECT q FROM QuestionnaireUserAnswers q WHERE q.questionnaire.id = ?1 AND q.cancelled=false AND q.user = ?2"),
 	@NamedQuery(name = "QuestionnaireUserAnswers.findByQuestionnaireCancelled", query = "SELECT q FROM QuestionnaireUserAnswers q WHERE q.questionnaire.id = ?1 AND q.cancelled=true")})
 public class QuestionnaireUserAnswers implements Serializable {
 	private static final long serialVersionUID = 1L;

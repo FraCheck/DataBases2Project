@@ -1,8 +1,7 @@
 package it.polimi.db2.controllers;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import javax.ejb.EJB;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,18 +15,13 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.polimi.db2.entities.*;
-import it.polimi.db2.services.*;
-import it.polimi.db2.entities.Questionnaire;
 
-@WebServlet("/Home")
-public class GoToHomePage extends HttpServlet {
+@WebServlet("/AlreadyAnswered")
+public class GoToAlreadyAnswered extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB(name = "it.polimi.db2.services/QuestionnaireService")
-	private QuestionnaireService questionnaireService;
 	
-	public GoToHomePage() {
+	public GoToAlreadyAnswered() {
 		super();
 	}
 
@@ -50,20 +44,7 @@ public class GoToHomePage extends HttpServlet {
 		if (session.isNew() || session.getAttribute("user") == null) {
 			path = "/WEB-INF/index.html";
 		}else {
-			path = "/WEB-INF/Home.html";
-			User user = (User)session.getAttribute("user");
-			
-			request.getSession().setAttribute("questions_done", 0);
-			
-			
-			if (user.getBanned()) {
-				ctx.setVariable("banned",true);
-			}else {
-			LocalDate today = LocalDate.now();
-			Questionnaire availableQuestionnaire = questionnaireService.findByDate(today);		
-			ctx.setVariable("todayQuestionnaire", availableQuestionnaire);
-			ctx.setVariable("banned",false);
-			}		
+			path = "/WEB-INF/AlreadyAnswered.html";		
 		}
 
 		

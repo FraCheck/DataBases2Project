@@ -60,7 +60,7 @@ public class QuestionnaireDeleted extends HttpServlet{
 		if (session.isNew() || session.getAttribute("user") == null) {
 			path = "/WEB-INF/index.html";
 		}else {
-			path = "/WEB-INF/Home.html";
+			path = "/WEB-INF/AfterCancellation.html";
 			user = (User)session.getAttribute("user");
 		}
 
