@@ -11,6 +11,7 @@
 			<class>it.polimi.db2.entities.QuestionnaireUserAnswers</class>
 			<class>it.polimi.db2.entities.Review</class>
 			<class>it.polimi.db2.entities.User</class>
+			<class>it.polimi.db2.entities.Badwords</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>

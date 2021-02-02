@@ -29,8 +29,16 @@ public class MarketingAnswersService {
 		return results;
 	}
 	
-	public List<MarketingAnswers> findByQustionnaireAndUser(int quaId, String username){
-		List<MarketingAnswers> results = em.createNamedQuery("Questionnaire.findByQuestionnaireUserAnswer", MarketingAnswers.class).setParameter(1, quaId).setParameter(2, username)
+	public List<MarketingAnswers> findByQuestionnaireAndUser(int quaId, String username){
+		List<MarketingAnswers> results = em.createNamedQuery("MarketingAnswers.findByQuestionnaireUserAnswer", MarketingAnswers.class).setParameter(1, quaId).setParameter(2, username)
+				.getResultList();
+		if (results.isEmpty())
+			return null;
+		return results;
+	}
+	
+	public List<MarketingAnswers> findByUser(String username){
+		List<MarketingAnswers> results = em.createNamedQuery("MarketingAnswers.findByUser", MarketingAnswers.class).setParameter(1, username)
 				.getResultList();
 		if (results.isEmpty())
 			return null;

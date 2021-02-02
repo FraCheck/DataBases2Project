@@ -106,10 +106,6 @@ public class AnswerSender extends HttpServlet{
 			try {
 				age_input = request.getParameter("Age");
 				
-				System.out.println(request.getParameter("Age"));
-				System.out.println(request.getParameter("Sex"));
-				System.out.println(request.getParameter("MyExpertise"));
-				
 				sex_input = request.getParameter("Sex");
 				
 				expertise_input = request.getParameter("MyExpertise");
@@ -162,7 +158,9 @@ public class AnswerSender extends HttpServlet{
 				int id = questionsList.get(i).getId(); // CHECK FOR ERRORS(?)
 				String ans = storedAnswers[i];
 				
-				answersService.createAnswer(q, answersService.findById(id) , ans);
+				MarketingQuestions question = answersService.findById(id); 
+				
+				answersService.createAnswer(q, question , ans);
 			}
 			
 		}

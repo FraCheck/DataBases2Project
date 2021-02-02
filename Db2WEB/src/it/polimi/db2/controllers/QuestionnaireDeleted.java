@@ -3,6 +3,7 @@ package it.polimi.db2.controllers;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -79,7 +80,9 @@ public class QuestionnaireDeleted extends HttpServlet{
 		LocalDate date = LocalDate.now();
 		Questionnaire questionnaire = qService.findByDate(date);
 		
-		Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
+		LocalDateTime date_time = LocalDateTime.now();
+		
+		Timestamp timestamp = Timestamp.valueOf(date_time);
 		 
 		
 		service.deleteAnswer(user, questionnaire, timestamp);

@@ -15,7 +15,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "marketing_answers", schema = "db_project") 
 @NamedQueries({@NamedQuery(name = "MarketingAnswers.findByQustionnaireAndUser", query = "SELECT m FROM MarketingAnswers m WHERE m.questionnaireUserAnswer.questionnaire.id = ?1 AND m.questionnaireUserAnswer.user.username = ?2"),
-	@NamedQuery(name = "MarketingAnswers.findByQuestionnaireUserAnswer", query = "SELECT m FROM MarketingAnswers m WHERE m.questionnaireUserAnswer.id = ?1")})
+	@NamedQuery(name = "MarketingAnswers.findByQuestionnaireUserAnswer", query = "SELECT m FROM MarketingAnswers m WHERE m.questionnaireUserAnswer.id = ?1"),
+	@NamedQuery(name = "MarketingAnswers.findByUser", query = "SELECT m FROM MarketingAnswers m WHERE m.questionnaireUserAnswer.user.username = ?1")})
 public class MarketingAnswers implements Serializable {
 	private static final long serialVersionUID = 1L;
 
