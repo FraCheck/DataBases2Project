@@ -106,6 +106,7 @@ public class GoToHomePage extends HttpServlet {
 			}
 			
 			request.getSession().setAttribute("questions_done", 0);
+			System.out.println(request.getSession().getAttribute("questions_done"));
 			
 			
 			if (user.getBanned()) {

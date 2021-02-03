@@ -148,6 +148,8 @@ public class AnswerSender extends HttpServlet{
 				}
 			}
 			
+			request.getSession().setAttribute("questions_done", 0);
+			
 			
 			String[] storedAnswers = (String[]) request.getSession().getAttribute("storedAnswers");
 			
@@ -155,7 +157,7 @@ public class AnswerSender extends HttpServlet{
 			
 			for(int i = 0; i< storedAnswers.length; i++) {
 				
-				int id = questionsList.get(i).getId(); // CHECK FOR ERRORS(?)
+				int id = questionsList.get(i).getId(); 
 				String ans = storedAnswers[i];
 				
 				MarketingQuestions question = answersService.findById(id); 

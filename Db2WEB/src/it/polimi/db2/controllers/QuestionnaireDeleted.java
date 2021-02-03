@@ -84,6 +84,7 @@ public class QuestionnaireDeleted extends HttpServlet{
 		
 		Timestamp timestamp = Timestamp.valueOf(date_time);
 		 
+		request.getSession().setAttribute("questions_done", 0);
 		
 		service.deleteAnswer(user, questionnaire, timestamp);
 	}

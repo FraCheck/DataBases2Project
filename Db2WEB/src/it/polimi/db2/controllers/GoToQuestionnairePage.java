@@ -51,6 +51,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("doGet Q");
 		String path;
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -71,7 +72,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 			
 			int questions_done = (int) request.getSession().getAttribute("questions_done");
 			boolean completed = service.userAlreadyAnswered((User) session.getAttribute("user"),qId);
-			
+			System.out.println(questions_done + "in-Q");
 			
 			
 			if(!completed) {
@@ -111,7 +112,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 		}else if(questions_done == list.length ) {
 			//Questionnaire ended, redirect to optional part, reset counter;
 			path = "/WEB-INF/QuestionnaireOptional.html";
-			request.getSession().setAttribute("questions_done", 0);
+			//request.getSession().setAttribute("questions_done", 0);
 			
 		}else {
 			list = (String[]) request.getSession().getAttribute("questionsList");
@@ -129,20 +130,33 @@ public class GoToQuestionnairePage extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try{doGet(request, response);
+		try{
 		
 		int done =(int) request.getSession().getAttribute("questions_done");
-		String[] storedAnswers = (String[]) request.getSession().getAttribute("storedAnswers");
 		
-		String answer = StringEscapeUtils.escapeJava(request.getParameter("answer"));
+		String[] list = (String[]) request.getSession().getAttribute("questionsList");
 		
-		storedAnswers[done] = answer;
-		
-		done++;
-		request.getSession().setAttribute("questions_done", done);
+		if(done < list.length ) {
+			
+			String[] storedAnswers = (String[]) request.getSession().getAttribute("storedAnswers");
+			
+			String answer = StringEscapeUtils.escapeJava(request.getParameter("answer"));
+			
+			storedAnswers[done] = answer;
+			
+			done++;
+			request.getSession().setAttribute("questions_done", done);
+			
+			System.out.println(request.getSession().getAttribute("questions_done")+ "out-Q");
+			
+			}
 		}catch(NullPointerException e) {
-	    	System.out.println("Empty Questionnaire");
-		}
+		    	System.out.println("Empty Questionnaire");
+			}
+		
+		System.out.println("doPost Q");
+		doGet(request, response);
+			
 	}
 
 	public void destroy() {

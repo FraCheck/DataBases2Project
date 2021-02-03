@@ -24,8 +24,14 @@ th, td {
 	<form action="Questionnaire" method="POST">
 	<label th:text= "${question}" ></label><br>  
     <input type="text" name="answer" required><br>
-    <input type="submit" value="next">    
+    <input type="submit" value="Next">    
     </form>
+    
+    <div>
+			<form  th:if="${session.questions_done != 0}" action="Back" method="POST">
+				<input type="submit" value="Previous">
+			</form>
+		</div>
 
 </body>
 </html>
