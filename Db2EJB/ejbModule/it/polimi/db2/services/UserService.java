@@ -9,7 +9,6 @@ import javax.persistence.NonUniqueResultException;
 import it.polimi.db2.entities.User;
 import it.polimi.db2.exceptions.*;
 
-
 import java.util.List;
 
 @Stateless
@@ -84,5 +83,14 @@ public class UserService {
 			return user;
 		}else
 			throw new UserExistsAlreadyException("You are trying to sign-in with an already registered Username or e-Mail. Please choose something different.");
+	}
+	
+	
+	public void setBanned(String username) {
+		List<User> list = em.createNamedQuery("User.findByUsername", User.class).setParameter(1, username)
+				.getResultList();
+		User u = list.get(0);
+		u.setBanned(true);
+		em.persist(u);
 	}
 }

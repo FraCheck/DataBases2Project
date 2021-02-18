@@ -2,8 +2,6 @@ package it.polimi.db2.controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -63,54 +61,13 @@ public class GoToHomePage extends HttpServlet {
 			path = "/WEB-INF/Home.html";
 			User user = (User)session.getAttribute("user");
 			
-			List <Badwords> badwordsObj = badwordsService.findAllBadwords();
-			
-			List<String> badwords = new ArrayList<String>();
-			
-			String username = user.getUsername();
-			
-			
-			List<MarketingAnswers> results = answersService.findByUser(username);
-			
-			List<String> answersTexts = new ArrayList<String>();
-			
-			for(int i = 0 ; i < badwordsObj.size() ; i++) {
-				
-				badwords.add(badwordsObj.get(i).getText());
-		
-			}
-			
-			try {
-			
-				for(int i = 0 ; i < results.size() ; i++) {
-				
-					answersTexts.add(results.get(i).getAnswer());
-			
-				}
-			}catch(NullPointerException e) {}
-			
-			
-			boolean isBanned = false;
-			
-			for(int i = 0 ; i < answersTexts.size() ; i++) {
-				
-				
-				if(badwords.contains(answersTexts.get(i))) {
-					isBanned = true;
-				}
-			}
-			
-			
-			if(isBanned) {
-				user.setBanned(true);
-			}
-			
 			request.getSession().setAttribute("questions_done", 0);
 			System.out.println(request.getSession().getAttribute("questions_done"));
 			
-			
 			if (user.getBanned()) {
 				ctx.setVariable("banned",true);
+			
+			
 			}else {
 			LocalDate today = LocalDate.now();
 			Questionnaire availableQuestionnaire = questionnaireService.findByDate(today);		

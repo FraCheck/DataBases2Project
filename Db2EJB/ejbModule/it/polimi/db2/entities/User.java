@@ -25,7 +25,7 @@ public class User implements Serializable {
 	
 	private String email;
 	
-	private boolean banned;
+	private Boolean banned;
 	
 	private int role;
 
@@ -36,6 +36,7 @@ public class User implements Serializable {
 		this.username = user;
 		this.password = psw;
 		this.email = email;
+		this.banned = false;
 	}
 
 	public int getId() {
@@ -54,11 +55,11 @@ public class User implements Serializable {
 		this.role = role;
 	}
 	
-	public boolean getBanned() {
+	public Boolean getBanned() {
 		return this.banned;
 	}
 
-	public void setBanned(boolean banned) {
+	public void setBanned(Boolean banned) {
 		this.banned = banned;
 	}
 

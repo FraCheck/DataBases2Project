@@ -2,6 +2,7 @@ package it.polimi.db2.controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -18,13 +19,16 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import it.polimi.db2.entities.Badwords;
 import it.polimi.db2.entities.MarketingQuestions;
 import it.polimi.db2.entities.Questionnaire;
 import it.polimi.db2.entities.QuestionnaireUserAnswers;
 import it.polimi.db2.entities.User;
+import it.polimi.db2.services.BadwordsService;
 import it.polimi.db2.services.MarketingAnswersService;
 import it.polimi.db2.services.QuestionnaireService;
 import it.polimi.db2.services.QuestionnaireUserAnswersService;
+import it.polimi.db2.services.UserService;
 
 
 @WebServlet("/AnswerSender")
@@ -40,6 +44,12 @@ public class AnswerSender extends HttpServlet{
 	
 	@EJB(name = "it.polimi.db2.services/MarketingAnswersService")
 	private MarketingAnswersService answersService;
+	
+	@EJB(name = "it.polimi.db2.services/BadwordsService")
+	private BadwordsService badwordsService;
+	
+	@EJB(name = "it.polimi.db2.services/UserService")
+	private UserService userService;
 	
 	
 	public AnswerSender() {
@@ -153,19 +163,59 @@ public class AnswerSender extends HttpServlet{
 			
 			String[] storedAnswers = (String[]) request.getSession().getAttribute("storedAnswers");
 			
-			QuestionnaireUserAnswers q = service.createAnswer(age, sex, expertise, questionnaire, user, optional_answers, mandatory_answers);
+            List <Badwords> badwordsObj = badwordsService.findAllBadwords();
 			
-			for(int i = 0; i< storedAnswers.length; i++) {
-				try {
-					int id = questionsList.get(i).getId(); 
-					String ans = storedAnswers[i];
-					
-					MarketingQuestions question = answersService.findById(id); 
-					
-					answersService.createAnswer(q, question , ans);
-				}catch(ArrayIndexOutOfBoundsException e) {
-					System.out.println(e);
-					
+			List<String> badwords = new ArrayList<String>();
+			
+			List<String> answersTexts = new ArrayList<String>();
+			
+			for(int i = 0 ; i < badwordsObj.size() ; i++) {
+				
+				badwords.add(badwordsObj.get(i).getText());
+		
+			}
+			
+			try {
+			
+				for(int i = 0 ; i < storedAnswers.length ; i++) {
+				
+					answersTexts.add(storedAnswers[i]);
+			
+				}
+			}catch(NullPointerException e) {}
+			
+			
+			Boolean isBanned = false;
+			
+			for(int i = 0 ; i < answersTexts.size() ; i++) {
+				
+				
+				if(badwords.contains(answersTexts.get(i))) {
+					isBanned = true;
+				}
+			}
+			
+			
+			if(isBanned) {
+				userService.setBanned(user.getUsername());
+				request.getSession().setAttribute("user", null);
+				
+			}
+			else {
+				QuestionnaireUserAnswers q = service.createAnswer(age, sex, expertise, questionnaire, user, optional_answers, mandatory_answers);
+				
+				for(int i = 0; i< storedAnswers.length; i++) {
+					try {
+						int id = questionsList.get(i).getId(); 
+						String ans = storedAnswers[i];
+						
+						MarketingQuestions question = answersService.findById(id); 
+						
+						answersService.createAnswer(q, question , ans);
+					}catch(ArrayIndexOutOfBoundsException e) {
+						System.out.println(e);
+						
+					}
 				}
 			}
 			
