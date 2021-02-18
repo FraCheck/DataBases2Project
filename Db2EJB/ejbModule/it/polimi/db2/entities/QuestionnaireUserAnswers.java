@@ -85,7 +85,7 @@ public class QuestionnaireUserAnswers implements Serializable {
 		
 	}
 
-	//To Add checks for correctness(?)
+	
 	public void addMarketingAnswers(Questionnaire questionnaire, MandatoryAnswersStorage list) {
 		MarketingQuestionsService service = new MarketingQuestionsService();
 		int length = list.getSize(); 

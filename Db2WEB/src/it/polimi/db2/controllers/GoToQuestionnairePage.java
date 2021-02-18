@@ -51,7 +51,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("doGet Q");
+		
 		String path;
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -72,7 +72,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 			
 			int questions_done = (int) request.getSession().getAttribute("questions_done");
 			boolean completed = service.userAlreadyAnswered((User) session.getAttribute("user"),qId);
-			System.out.println(questions_done + "in-Q");
+			System.out.println(questions_done + " in-Q");
 			
 			
 			if(!completed) {
@@ -81,6 +81,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 				String[] list = null;
 				try {
 					list = (String[]) request.getSession().getAttribute("questionsList");
+					System.out.println(list.length + "list of questions length");
 				}catch(Exception e) {}
 				
 				if(questions_done == 0) {
@@ -112,7 +113,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 		}else if(questions_done == list.length ) {
 			//Questionnaire ended, redirect to optional part, reset counter;
 			path = "/WEB-INF/QuestionnaireOptional.html";
-			//request.getSession().setAttribute("questions_done", 0);
+			
 			
 		}else {
 			list = (String[]) request.getSession().getAttribute("questionsList");
@@ -120,9 +121,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 			ctx.setVariable("question", current_question );
 		}
 				
-	}else {  path = "/WEB-INF/AlreadyAnswered.html";
-	}
-
+	}else {  path = "/WEB-INF/AlreadyAnswered.html";}
 		}
 
 		templateEngine.process(path, ctx, response.getWriter());
@@ -132,11 +131,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 			throws ServletException, IOException {
 		try{
 		
-		int done =(int) request.getSession().getAttribute("questions_done");
-		
-		String[] list = (String[]) request.getSession().getAttribute("questionsList");
-		
-		if(done < list.length ) {
+		    int done =(int) request.getSession().getAttribute("questions_done");
 			
 			String[] storedAnswers = (String[]) request.getSession().getAttribute("storedAnswers");
 			
@@ -144,18 +139,16 @@ public class GoToQuestionnairePage extends HttpServlet {
 			
 			storedAnswers[done] = answer;
 			
-			done++;
+			done = done + 1;
 			request.getSession().setAttribute("questions_done", done);
 			
-			System.out.println(request.getSession().getAttribute("questions_done")+ "out-Q");
+			System.out.println(request.getSession().getAttribute("questions_done"));
 			
-			}
 		}catch(NullPointerException e) {
 		    	System.out.println("Empty Questionnaire");
 			}
 		
-		System.out.println("doPost Q");
-		doGet(request, response);
+		doGet(request, response);	
 			
 	}
 
