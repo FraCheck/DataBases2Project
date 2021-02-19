@@ -51,27 +51,29 @@ th, td {
 			</div>
 			<section>
 				<br />
-				<div th:if="${todayQuestionnaire.product.getReviews()!=null}">
-					<p>Read some reviews of the product:
-					<p>
-					<table style="width: 70%"
-						th:each="review : ${todayQuestionnaire.product.getReviews()}">
-						<tr>
-							<th><div th:if="${review.getReviewerName()!=''}">
-									<span th:text="${review.getReviewerName()}"></span>
-								</div>
-								<div th:if="${#strings.isEmpty(review.getReviewerName())}">
-									<span>Unknown reviewer</span>
-								</div></th>
-						</tr>
-						<tr>
-							<td><span th:text="${review.getReviewText()}"></span></td>
-						</tr>
-
-					</table>
-				</div>
-				<div th:if="${todayQuestionnaire.product.getReviews()==null}">
-					<p>No reviews available for this product.</p>
+				<div th:if="${todayQuestionnaire!=null}">
+					<div th:if="${todayQuestionnaire.product.getReviews() != null}">
+						<p>Read some reviews of the product:
+						<p>
+						<table style="width: 70%"
+							th:each="review : ${todayQuestionnaire.product.getReviews()}">
+							<tr>
+								<th><div th:if="${review.getReviewerName()!=''}">
+										<span th:text="${review.getReviewerName()}"></span>
+									</div>
+									<div th:if="${#strings.isEmpty(review.getReviewerName())}">
+										<span>Unknown reviewer</span>
+									</div></th>
+							</tr>
+							<tr>
+								<td><span th:text="${review.getReviewText()}"></span></td>
+							</tr>
+	
+						</table>
+					</div>
+					<div th:if="${todayQuestionnaire.product.getReviews()==null}">
+						<p>No reviews available for this product.</p>
+					</div>
 				</div>
 			</section>
 		</section>

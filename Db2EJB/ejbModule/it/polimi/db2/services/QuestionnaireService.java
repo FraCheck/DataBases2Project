@@ -62,6 +62,7 @@ public class QuestionnaireService {
 		Product managedProduct = em.find(Product.class, pId);
 		Questionnaire questionnaireManaged = em.find(Questionnaire.class, qId);
 		questionnaireManaged.setProduct(managedProduct);
+		em.flush();
 	}
 	
 	// Delete questionnaire
