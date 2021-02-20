@@ -1,7 +1,9 @@
 package it.polimi.db2.controllers;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -60,6 +62,12 @@ public class GoToHomePage extends HttpServlet {
 		}else {
 			path = "/WEB-INF/Home.html";
 			User user = (User)session.getAttribute("user");
+			
+			LocalDateTime date_time = LocalDateTime.now();
+			
+			Timestamp timestamp = Timestamp.valueOf(date_time);
+			 
+			request.getSession().setAttribute("login_timestamp", timestamp);
 			
 			request.getSession().setAttribute("questions_done", 0);
 			System.out.println(request.getSession().getAttribute("questions_done"));

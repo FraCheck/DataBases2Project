@@ -189,9 +189,12 @@ public class AnswerSender extends HttpServlet{
 			
 			for(int i = 0 ; i < answersTexts.size() ; i++) {
 				
+				String answer = answersTexts.get(i);
 				
-				if(badwords.contains(answersTexts.get(i))) {
+				for(int j = 0 ; j < badwords.size() ; j++) {
+				   if(answer.toLowerCase().contains(badwords.get(j).toLowerCase())) {
 					isBanned = true;
+				   }
 				}
 			}
 			
