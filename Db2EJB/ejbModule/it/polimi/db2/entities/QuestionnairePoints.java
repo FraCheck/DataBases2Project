@@ -27,6 +27,7 @@ public class QuestionnairePoints implements Serializable {
 
 	private int points;
 	
+	// Used in Leadboard page to navigate to the user with the best score
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;

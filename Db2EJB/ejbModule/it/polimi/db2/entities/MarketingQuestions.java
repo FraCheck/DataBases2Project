@@ -13,16 +13,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "marketing_questions", schema = "db_project")
-@NamedQueries({ @NamedQuery(name = "MarketingQuestions.findByQuestionnaire", query = "SELECT m FROM MarketingQuestions m  WHERE m.questionnaire = ?1")})
 public class MarketingQuestions implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String question;
 
+	// Mapped for simplicity
 	@ManyToOne
 	@JoinColumn(name = "questionnaire")
 	private Questionnaire questionnaire;

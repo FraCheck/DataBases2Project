@@ -17,6 +17,7 @@ public class Review implements Serializable{
 	
 	private String reviewer_Name;
 	
+	// Mapped for simplicity, we don't need to access a product from a review
 	@ManyToOne
 	@JoinColumn(name = "product")
 	private Product product;

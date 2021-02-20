@@ -36,8 +36,6 @@ public class LoadUserAnswers extends HttpServlet{
 	private QuestionnaireService qService;
 	@EJB(name = "it.polimi.db2.services/QuestionnaireUserAnswersService")
 	private QuestionnaireUserAnswersService quaService;
-	@EJB(name = "it.polimi.db2.services/MarketingAnswersService")
-	private MarketingAnswersService maService;
 	
 	public LoadUserAnswers() {
 		super();
@@ -89,10 +87,9 @@ public class LoadUserAnswers extends HttpServlet{
 			path = "/AdminPanel.html";
 			
 			// Load user Marketing Answers
-			List<MarketingAnswers> mA = maService.findByQuestionnaireUserAnswer(pqUAId);
+			//List<MarketingAnswers> mA = maService.findByQuestionnaireUserAnswer(pqUAId);
+			List<MarketingAnswers> mA = selectedQuestionnaireUserAnswer.getMarketingAnswers();
 			ctx.setVariable("marketingAnswers", mA);
-			char test = selectedQuestionnaireUserAnswer.getSex();
-			System.out.println("lol"  +test);
 			templateEngine.process(path, ctx, response.getWriter());
 		} catch (Exception e) {
 			// for debugging only e.printStackTrace();

@@ -27,9 +27,6 @@ public class GoToQuestionnairePage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	
-	@EJB(name = "it.polimi.db2.services/MarketingQuestionsService")
-	private MarketingQuestionsService questionService;
-	
 	@EJB(name = "it.polimi.db2.services/QuestionnaireService")
 	private QuestionnaireService questionnaireService;
 	
@@ -88,7 +85,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 					//Questionnaire started
 					
 				    
-				    List<MarketingQuestions> qList = questionService.findByQuestionnaire(q);
+				    List<MarketingQuestions> qList = q.getMarketingQuestions();
 				    
 				    
 				    try {

@@ -2,7 +2,6 @@ package it.polimi.db2.controllers;
 
 	import java.io.IOException;
 
-	import javax.ejb.EJB;
 	import javax.servlet.ServletContext;
 	import javax.servlet.ServletException;
 	import javax.servlet.annotation.WebServlet;
@@ -15,21 +14,11 @@ package it.polimi.db2.controllers;
 	import org.thymeleaf.context.WebContext;
 	import org.thymeleaf.templatemode.TemplateMode;
 	import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-	import it.polimi.db2.services.*;
 
 	@WebServlet("/Back")
 	public class GoBack extends HttpServlet {
 		private static final long serialVersionUID = 1L;
 		private TemplateEngine templateEngine;
-		
-		@EJB(name = "it.polimi.db2.services/MarketingQuestionsService")
-		private MarketingQuestionsService questionService;
-		
-		@EJB(name = "it.polimi.db2.services/QuestionnaireService")
-		private QuestionnaireService questionnaireService;
-		
-		@EJB(name = "it.polimi.db2.services/QuestionnaireSUserAnswersService")
-		private QuestionnaireUserAnswersService service;
 		
 		public GoBack() {
 			super();

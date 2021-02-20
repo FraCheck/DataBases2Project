@@ -23,8 +23,7 @@ import util.MandatoryAnswersStorage;
 
 @Entity
 @Table(name = "questionnaire_user_answers", schema = "db_project")
-@NamedQueries({@NamedQuery(name = "QuestionnaireUserAnswers.findByUser", query = "SELECT q FROM QuestionnaireUserAnswers q WHERE q.user.id = ?1"),
-	@NamedQuery(name = "QuestionnaireUserAnswers.findByQuestionnaire", query = "SELECT q FROM QuestionnaireUserAnswers q WHERE q.questionnaire.id = ?1 AND q.cancelled=false"),
+@NamedQueries({@NamedQuery(name = "QuestionnaireUserAnswers.findByQuestionnaire", query = "SELECT q FROM QuestionnaireUserAnswers q WHERE q.questionnaire.id = ?1 AND q.cancelled=false"),
 	@NamedQuery(name = "QuestionnaireUserAnswers.findByQuestionnaireUser", query = "SELECT q FROM QuestionnaireUserAnswers q WHERE q.questionnaire.id = ?1 AND q.cancelled=false AND q.user = ?2"),
 	@NamedQuery(name = "QuestionnaireUserAnswers.findByQuestionnaireCancelled", query = "SELECT q FROM QuestionnaireUserAnswers q WHERE q.questionnaire.id = ?1 AND q.cancelled=true")})
 public class QuestionnaireUserAnswers implements Serializable {
@@ -60,6 +59,16 @@ public class QuestionnaireUserAnswers implements Serializable {
 	@OneToMany(mappedBy="questionnaireUserAnswer", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true )
 	private List <MarketingAnswers> marketingAnswers;
 	
+	public List<MarketingAnswers> getMarketingAnswers() {
+		return marketingAnswers;
+	}
+
+
+	public void setMarketingAnswers(List<MarketingAnswers> marketingAnswers) {
+		this.marketingAnswers = marketingAnswers;
+	}
+
+
 	public QuestionnaireUserAnswers() {}
 	
 	

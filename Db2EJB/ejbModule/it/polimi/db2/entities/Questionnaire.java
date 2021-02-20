@@ -30,11 +30,10 @@ public class Questionnaire implements Serializable {
 	private int id;
 	
 	private Date date;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "product")
 	private Product product;
-
 
 	@OneToMany(mappedBy="questionnaire", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true )
 	private List<MarketingQuestions> marketingQuestions;
@@ -75,4 +74,5 @@ public class Questionnaire implements Serializable {
 	public void setMarketingQuestions(List<MarketingQuestions> marketingQuestions) {
 		this.marketingQuestions = marketingQuestions;
 	}
+	
 }
