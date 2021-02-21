@@ -102,11 +102,10 @@ public class AnswerSender extends HttpServlet{
 			
 			int mandatory_answers = questionsList.size();
 			
-			int age = 0;
+			int age = -1;
 			char sex = 0;
-			int expertise = 0;
+			int expertise = -1;
 			int optional_answers = 0;
-
 			String age_input = null;
 			String sex_input = null;
 			String expertise_input = null;
