@@ -69,7 +69,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 			
 			int questions_done = (int) request.getSession().getAttribute("questions_done");
 			boolean completed = service.userAlreadyAnswered((User) session.getAttribute("user"),qId);
-			System.out.println(questions_done + " in-Q");
+			// System.out.println(questions_done + " in-Q");
 			
 			
 			if(!completed) {
@@ -78,7 +78,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 				String[] list = null;
 				try {
 					list = (String[]) request.getSession().getAttribute("questionsList");
-					System.out.println(list.length + "list of questions length");
+					// System.out.println(list.length + "list of questions length");
 				}catch(Exception e) {}
 				
 				if(questions_done == 0) {

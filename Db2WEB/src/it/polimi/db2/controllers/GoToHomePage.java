@@ -30,13 +30,7 @@ public class GoToHomePage extends HttpServlet {
 	
 	@EJB(name = "it.polimi.db2.services/QuestionnaireService")
 	private QuestionnaireService questionnaireService;
-	
-	@EJB(name = "it.polimi.db2.services/BadwordsService")
-	private BadwordsService badwordsService;
-	
-	@EJB(name = "it.polimi.db2.services/MarketingAnswerService")
-	private MarketingAnswersService answersService;
-	
+			
 	public GoToHomePage() {
 		super();
 	}
@@ -70,7 +64,7 @@ public class GoToHomePage extends HttpServlet {
 			request.getSession().setAttribute("login_timestamp", timestamp);
 			
 			request.getSession().setAttribute("questions_done", 0);
-			System.out.println(request.getSession().getAttribute("questions_done"));
+			// System.out.println(request.getSession().getAttribute("questions_done"));
 			
 			if (user.getBanned()) {
 				ctx.setVariable("banned",true);
