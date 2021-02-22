@@ -100,7 +100,7 @@ public class GoToQuestionnairePage extends HttpServlet {
 					request.getSession().setAttribute("storedAnswers", answersList);
 					request.getSession().setAttribute("questionsList", questionsList);
 					
-					String current_question = questionsList[questions_done];
+					String current_question = qList.get(questions_done).getQuestion();
 					ctx.setVariable("question", current_question );
 				    }catch(NullPointerException e) {
 				    	path = "/WEB-INF/Home.html";
