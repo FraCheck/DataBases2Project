@@ -174,6 +174,7 @@ public class AnswerSender extends HttpServlet{
 		
 			}
 			
+			// switch to a list, easier to manage
 			try {
 			
 				for(int i = 0 ; i < storedAnswers.length ; i++) {
@@ -207,13 +208,9 @@ public class AnswerSender extends HttpServlet{
 				QuestionnaireUserAnswers q = service.createAnswer(age, sex, expertise, questionnaire, user, optional_answers, mandatory_answers);
 				
 				for(int i = 0; i< storedAnswers.length; i++) {
-					try {
-						int id = questionsList.get(i).getId(); 
-						String ans = storedAnswers[i];
-						
-						MarketingQuestions question = answersService.findById(id); 
-						
-						answersService.createAnswer(q, question , ans);
+					try {						
+						String ans = storedAnswers[i];															
+						answersService.createAnswer(q, questionsList.get(i) , ans);
 					}catch(ArrayIndexOutOfBoundsException e) {
 						System.out.println(e);
 						

@@ -14,15 +14,10 @@ public class MarketingAnswersService {
 	private EntityManager em;
 
 	public MarketingAnswersService() {}
-	
-	public MarketingQuestions findById(int id) {
-		return em.find(MarketingQuestions.class, id);
-	}
-	
+		
 	public void createAnswer(QuestionnaireUserAnswers questionnaireUserAnswer, MarketingQuestions question, String answer) {
 		MarketingAnswers ans = new MarketingAnswers(questionnaireUserAnswer, question, answer);		
-		em.persist(ans);
-		
+		em.persist(ans);		
 	}
 }
 
