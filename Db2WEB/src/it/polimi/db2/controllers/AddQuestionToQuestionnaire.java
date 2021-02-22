@@ -35,9 +35,6 @@ public class AddQuestionToQuestionnaire extends HttpServlet{
 	@EJB(name = "it.polimi.db2.services/QuestionnaireService")
 	private QuestionnaireService qService;
 	
-	@EJB(name = "it.polimi.db2.services/MarketingQuestionsService")
-	private MarketingQuestionsService mService;
-	
 	@EJB(name = "it.polimi.db2.services/ProductService")
 	private ProductService pService;
 	
@@ -109,9 +106,9 @@ public class AddQuestionToQuestionnaire extends HttpServlet{
 				String successAddMsg = null;
 				
 				// Find the questionnaire selected by the user...
-				questionnaire = qService.findById(qId);
+				//questionnaire = qService.findById(qId);
 				// ... And add the question to it
-				mService.createQuestion(questionnaire, marketingQuestion);
+				qService.createQuestion(qId, marketingQuestion);
 				successAddMsg = "The question has been added to the questionnaire!";
 				ctx.setVariable("successAddQuestionMsg", successAddMsg);
 			}

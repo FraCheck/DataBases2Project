@@ -70,4 +70,14 @@ public class QuestionnaireService {
 		Questionnaire managedQuestionnaire = em.find(Questionnaire.class, qId);
 		em.remove(managedQuestionnaire);
 	}
+	
+	// Add a question to the questionnaire
+	public void createQuestion(int questionnaireid, String question) {
+		Questionnaire questionnaire = em.find(Questionnaire.class, questionnaireid);
+		MarketingQuestions mquestion = new MarketingQuestions(questionnaire, question);
+		List<MarketingQuestions> current = questionnaire.getMarketingQuestions();
+		current.add(mquestion);
+		questionnaire.setMarketingQuestions(current);
+		em.persist(mquestion);
+	}
 }

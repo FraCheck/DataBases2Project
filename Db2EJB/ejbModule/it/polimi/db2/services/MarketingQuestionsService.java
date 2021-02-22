@@ -1,5 +1,7 @@
 package it.polimi.db2.services;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,12 +17,5 @@ public class MarketingQuestionsService {
 	
 	public MarketingQuestions findById(int id) {
 		return em.find(MarketingQuestions.class, id);
-	}
-	
-	
-	// Create a new question for a questionnaire
-	public void createQuestion(Questionnaire questionnaire, String question) {
-		MarketingQuestions mquestion = new MarketingQuestions(questionnaire, question);
-		em.persist(mquestion);
 	}
 }
