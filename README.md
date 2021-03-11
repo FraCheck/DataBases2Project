@@ -1,5 +1,6 @@
 # Data Bases 2 Optional Project
-Gamified marketing application project for Data Bases 2 course 2020/2021 at Politecnico di Milano. Developed by [Francesco Cecchetti](https://github.com/FraCheck) and [Tommaso Lunardon](https://github.com/TommasoLunardon).
+Gamified marketing application project for Data Bases 2 course 2020/2021 at Politecnico di Milano.
+Developed by [Francesco Cecchetti](https://github.com/FraCheck) and [Tommaso Lunardon](https://github.com/TommasoLunardon).
 
 ## Adopted technologies
 
